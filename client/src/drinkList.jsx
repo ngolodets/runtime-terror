@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import CocktailFaves from './CocktailFaves';
+import CocktailFaves from './drinkFaves';
 
 class CockTailList extends React.Component {
   constructor(props) {
