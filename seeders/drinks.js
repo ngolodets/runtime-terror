@@ -1,4 +1,12 @@
-[
+require('dotenv').config();
+const mongoose = require('mongoose');
+const Drink = require('../models/drink');
+
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
+console.log("THIS IS THE URI",process.env.MONGODB_URI)
+Drink.deleteMany({}, (err) => err ? console.log(err) : 'Collection removed')
+
+let DRINKS = [
  {
    "FIELD1": 0,
    "drinkName": "'57 chevy with a white license plate",
@@ -12394,3 +12402,28 @@
    ]
 }
 ]
+
+const drinkSeeds = DRINKS.map( drink => {
+   return {
+      drinkName: drink["drinkName"],
+      idDrink: drink["idDrink"],
+      type: drink["type"],
+      category: drink["category"],
+      picture: drink["picture"],
+      glassType: drink["glassType"],
+      ingredients: drink["ingredients"].map((ingredient, i) => ({
+         measure: drink["measures"][i],
+         ingredient
+      })),
+      instructions: drink["instructions"],
+   }
+})
+
+// console.log(drinkSeeds.filter( d => d.idDrink === 11050))
+
+
+Drink.insertMany(drinkSeeds, (err, drinks) => {
+	if (err) console.log(err)
+	console.log(`🌈 Inserted ${drinkSeeds.length} drinks 🌈`)
+	process.exit()
+})
