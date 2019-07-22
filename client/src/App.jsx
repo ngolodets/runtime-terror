@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import './App.css';
 import Login from './Login';
 import Signup from './Signup';
 
@@ -101,7 +102,6 @@ class App extends React.Component {
       );
     }
     return(
-      //<p>{contents}</p>
       contents
     )
   }
