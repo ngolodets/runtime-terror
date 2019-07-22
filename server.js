@@ -41,6 +41,12 @@ app.use('/auth', require('./routes/auth'));
 // can use expressJWT({secret: process.env.JWT_SECRET}).unless({method: 'POST'}) to lock every path, except POST
 app.use('/api', expressJWT({secret: process.env.JWT_SECRET}), require('./routes/api'));
 
+app.get('/something', function(req, res) {
+  res.send('hello')
+})
+
 app.listen(process.env.PORT, () => {
   console.log(` ❄️️  ❄ ...listening on port ${process.env.PORT}... ❄ ❄️ ` )
 })
+
+app.get('/users', )
