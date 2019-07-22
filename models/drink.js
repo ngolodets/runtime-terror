@@ -6,15 +6,14 @@ const ingredientsSchema = new mongoose.Schema({
 })
 
 const drinkSchema = new mongoose.Schema({
-    drinkName: String,
-    dateModified: Date,
-    idDrink: Number,
-    type: String,
-    category: String,
-    picture: String,
-    glassType: String,
-    ingredients: [ingredientsSchema],
-    instructions: String
+  drinkName: String,
+  dateModified: Date,
+  type: String,
+  category: String,
+  picture: String,
+  glassType: String,
+  ingredients: [ingredientsSchema],
+  instructions: String
 }, {
   timestamps: true
 });
