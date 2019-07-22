@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-//import DrinkFaves from './DrinkFaves';
+import DrinkFaves from './DrinkFaves';
+
 
 class DrinkList extends React.Component {
   constructor(props) {
