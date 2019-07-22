@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import DrinkFaves from './DrinkFaves';
+//import DrinkFaves from './DrinkFaves';
 
 class DrinkList extends React.Component {
   constructor(props) {
@@ -52,7 +52,7 @@ class DrinkList extends React.Component {
 
   render() {
     return (
-        <DrinkFaves drinks={this.state.drinks}
+        <DrinkList drinks={this.state.drinks}
         handleSubmit={this.handleSubmit} />
     )
   }
