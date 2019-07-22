@@ -1,8 +1,13 @@
 const express = require('express');
 const router = express.Router();
+const Drink = require('../models/drink');
 
 router.get('/', (req, res) => {
-  res.json({type: 'success', message: "You accessed the protected api routes"})
+  Drink.find({}, (err, drinks) => {
+    err ? console.log(err) : res.json(drinks);
+    //res.json({type: 'success', message: "You accessed the protected api routes"})
+  })
 })
 
 module.exports = router;
+
