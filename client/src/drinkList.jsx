@@ -15,12 +15,12 @@ class DrinkList extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault()
-    axios.post('/drinks', {
-      drink: this.state.drink
+    axios.post('/drink', {
+      drinkName: this.state.drink
     }).then( (response) => {
-      axios.get('/drinks').then( (response) => {
+      axios.get('/drink').then( (response) => {
         this.setState({
-          drinks: response.data
+          drink: response.data
         })
       })
     })
@@ -53,7 +53,7 @@ class DrinkList extends React.Component {
 
   render() {
     return (
-        <DrinkList drinks={this.state.drinks}
+        <DrinkList drinks={this.state.drinkName}
         handleSubmit={this.handleSubmit} />
     )
   }
