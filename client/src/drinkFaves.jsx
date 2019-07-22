@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CocktailFaves = props => {
+const DrinkFaves = props => {
 
   function handleClick(e) {
     e.stopPropagation()
@@ -15,10 +15,10 @@ const CocktailFaves = props => {
   }
 
   return (
-    <div onClick={handleClick} className={'cocktail-row-fave ' + addRemove}>
+    <div onClick={handleClick} className={'drink-row-fave ' + addRemove}>
       <p className='material-icons'>{addRemove}</p>
     </div>
   );
 }
 
-export default CocktailFaves; 
+export default DrinkFaves; 
