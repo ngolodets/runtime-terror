@@ -12,7 +12,7 @@ const drinkSchema = new mongoose.Schema({
     measurements: [],
     user: [{
       type: mongoose.Schema.Types.ObjectId, 
-      ref: 'Drink'
+      ref: 'User'
     }]
   }
 });
