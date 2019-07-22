@@ -102,7 +102,6 @@ class App extends React.Component {
       );
     }
     return(
-      //<p>{contents}</p>
       contents
     )
   }
