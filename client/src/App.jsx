@@ -90,8 +90,18 @@ class App extends React.Component {
     })
   }
 
+  // componentDidMount() {
+  //   this.checkForLocalToken()
+  // }
   componentDidMount() {
+    console.log("component did mount")
     this.checkForLocalToken()
+    const url = '/drink';
+    axios.get(url).then(result => {
+      this.setState({
+        apiData: result.data
+      })
+    })
   }
 
   render() {
@@ -106,7 +116,10 @@ class App extends React.Component {
           <form action="/api" method='GET'>
             <input type="text" name='text' placeholder='Type search request here...'/>
             <input type="submit" value='Search'/>
+            {/* <Favorite /> */}
+            {/* <p onClick={this.handleDetailsClick}>click this</p> */}
           </form>
+          {this.state.apiData && this.state.apiData.map(drink => <a href="{drink.drinkName}"><img className='drinkImg' src={drink.picture}/>{drink.drinkName}</a>)}
         </>
       )
     } else {
@@ -120,7 +133,6 @@ class App extends React.Component {
     }
     return(
       contents
-       
     )
   }
 }

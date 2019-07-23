@@ -103,8 +103,8 @@ router.put('/users/:userid/drinks/:drinkid', (req, res) => {
         {
           drinkName: req.body.drinkName,
           ingredients: [
-            req.body.ingredient,
-            req.body.measure
+            ingredients.push(req.body.ingredient),
+            ingredients.push(req.body.measure)
           ],
           instructions: req.body.instructions
         },
