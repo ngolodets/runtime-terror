@@ -13,10 +13,14 @@ router.get('/', (req, res) => {
 
 // GET /drinks/:drinkid -- display/get selected drink
 router.get('/drinks/:drinkid', (req, res) => {
-  Drink.findById(req.params.id).populate('drinks').exec(function(err, drink) {
+  Drink.findOne(req.params.id, (err, drink) => {
     if (err) res.json(err)
-    res.json(drink);
+    res.json(drink)
   })
+  // Drink.findById(req.params.id).populate('drinks').exec(function(err, drink) {
+  //   if (err) res.json(err)
+  //   res.json(drink);
+  // })
 })
 
 // POST /drinks -- create new drink
