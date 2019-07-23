@@ -60,6 +60,17 @@ class App extends React.Component {
   //   })
   // }
 
+  handleDetailsClick(drink) {
+    console.log('fetching details for:', drink);
+    const url = '/drink';
+    axios.get(url).then(result => {
+      this.setState({
+        current: result.data
+      })
+      console.log(result)
+    })
+  }
+
   // Array Destructuring way to handle this
   liftToken({token, user}) {
     this.setState({

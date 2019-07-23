@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('../models/user');
 const Drink = require('../models/drink');
 
-// GET /drinks -- display/get all drinks
+// GET /drinks -- display/get all drinks -- WORKS
 router.get('/', (req, res) => {
   Drink.find({}, (err, drinks) => {
     err ? console.log(err) : res.json(drinks);
@@ -11,16 +11,12 @@ router.get('/', (req, res) => {
   })
 })
 
-// GET /drinks/:drinkid -- display/get selected drink
+// GET /drinks/:drinkid -- display/get selected drink -- WORKS 
 router.get('/drinks/:drinkid', (req, res) => {
   Drink.findOne(req.params.id, (err, drink) => {
     if (err) res.json(err)
     res.json(drink)
   })
-  // Drink.findById(req.params.id).populate('drinks').exec(function(err, drink) {
-  //   if (err) res.json(err)
-  //   res.json(drink);
-  // })
 })
 
 // POST /drinks -- create new drink
@@ -60,7 +56,7 @@ router.get('/drinks/:drinkid', (req, res) => {
 //   })
 // })
 
-//GET /users/:userid/drinks -- get drinks for one user
+//GET /users/:userid/drinks -- get drinks for one user -- WORKS
 router.get('/users/:userid/drinks', (req, res) => {
   User.findById(req.params.userid).populate('drinks').exec((err, user) => {
     if (err) res.json(err)
@@ -68,7 +64,7 @@ router.get('/users/:userid/drinks', (req, res) => {
   }) 
 })
 
-//GET /users/:userid/drinks/:drinkid
+//GET /users/:userid/drinks/:drinkid -- WORKS
 router.get('/users/:userid/drinks/:drinkid', (req, res) => {
   Drink.findById(req.params.drinkid, (err, drink) => {
     if (err) res.json(err)
@@ -76,13 +72,16 @@ router.get('/users/:userid/drinks/:drinkid', (req, res) => {
   })
 })
 
-//POST /users/:userid/drinks -- create new drink 
+//POST /users/:userid/drinks -- create new drink -- WORKS, BUT need to figure out how to post ingredients
 router.post('/users/:userid/drinks', (req, res) =>{
   User.findById(req.params.userid, function(err, user) {
     Drink.create({
       drinkName: req.body.drinkName,
-      ingredients: req.body.ingredients,
-      instructions: req.body.instructins,
+      instructions: req.body.instructions,
+      ingredients: [
+        req.body.ingredient,
+        req.body.measure
+      ],
       user: req.params.userid
       }, function(err,drink){
           user.drinks.push(drink)
@@ -94,17 +93,20 @@ router.post('/users/:userid/drinks', (req, res) =>{
   })
 })
 
-//PUT /users/:userid/drinks/:drinkid -- update one drink for one user
+//PUT /users/:userid/drinks/:drinkid -- update one drink for one user -- WORKS
 router.put('/users/:userid/drinks/:drinkid', (req, res) => {
   User.findById(
     req.params.userid,
     (err, user) => {
-      user.drinks.update(
+      Drink.findByIdAndUpdate (
         req.params.drinkid,
         {
           drinkName: req.body.drinkName,
-          ingredients: req.body.ingredients,
-          instructions: req.body.instructins
+          ingredients: [
+            req.body.ingredient,
+            req.body.measure
+          ],
+          instructions: req.body.instructions
         },
         (err, drink) => {
           if (err) res.json(err)
@@ -115,7 +117,7 @@ router.put('/users/:userid/drinks/:drinkid', (req, res) => {
   )
 })
 
-//DELETE /users/:userid/drinks/:drinkid -- detete one drink from one user
+//DELETE /users/:userid/drinks/:drinkid -- detete one drink from one user -- WORKS
 router.delete('/users/:userid/drinks/:drinkid', (req, res) => {
   User.findById(req.params.userid, (err, user) => {
     user.drinks.pull(req.params.drinkid)
@@ -128,7 +130,6 @@ router.delete('/users/:userid/drinks/:drinkid', (req, res) => {
     })
   })
 })
-
 
 module.exports = router;
 
