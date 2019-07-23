@@ -1,9 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import './App.css';
-
-import DrinkList from './drinkList'
-
+import DrinkList from './DrinkList'
 import Login from './Login';
 import Signup from './Signup';
 

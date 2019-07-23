@@ -1,11 +1,15 @@
 const express = require('express'); //--> creates routes
 const router = express.Router();
 
+// GET /drinks -- display all drinks
 router.get('/', (req, res) => {
-  db.drinks.findAll().then(function(drink) {
-    res.render('index', {drink})
+  Drink.find({}, function(err, drinks) {
+    if (err) return res.send(err)
+    res.json(drinks)
   })
 })
+
+
 
 // router.post('/drinks/:user_id', (req, res) => {
 

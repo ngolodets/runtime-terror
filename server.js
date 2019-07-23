@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 const expressJWT = require('express-jwt');
 const helmet = require('helmet');
@@ -26,7 +27,7 @@ const signupLimiter = new RateLimit({
   message: "Maximum accounts created. Please try again later."
 })
 
-mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true});
+mongoose.connect('mongodb://localhost/jwtAuth', {useNewUrlParser: true});
 const db = mongoose.connection;
 db.once('open', () => {
   console.log(`Connected to Mongo on ${db.host}:${db.port}`);
