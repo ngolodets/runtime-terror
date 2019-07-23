@@ -2,10 +2,11 @@ import React from 'react';
 import axios from 'axios';
 import './App.css';
 
-import DrinkList from './drinkList'
+import DrinkList from './DrinkList'
 
 import Login from './Login';
 import Signup from './Signup';
+import Favorite from './Favorite';
 
 
 class App extends React.Component {
@@ -97,6 +98,7 @@ class App extends React.Component {
           <form action="/" method='GET'>
             <input type="text" name='text' placeholder='Type search request here...'/>
             <input type="submit" value='drinks'/>
+            <Favorite liftToken={this.liftToken} />
           </form>
         </>
       )
