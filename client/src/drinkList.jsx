@@ -3,28 +3,42 @@ import axios from 'axios';
 //import DrinkFaves from './DrinkFaves';
 
 
-class DrinkList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      drinks: [],
-      filter: 'all',
-      faves: []
-    }
-  }
-
-  handleSubmit(e) {
-    e.preventDefault()
-    axios.post('/drink', {
-      drinkName: this.state.drink
-    }).then( (response) => {
-      axios.get('/drink').then( (response) => {
-        this.setState({
-          drink: response.data
-        })
-      })
-    })
-  }
+const DrinkList = (props) => {
+  let drinks = props.drinks.find((drink) => {
+    return drink.id === parseInt(props.match.params.id)
+  })
+    
+    // componentDidMount() {
+    //   console.log("component did mount")
+    //   this.checkForLocalToken()
+    //   const url = '/drink';
+    //   axios.get(url).then(result => {
+    //     this.setState({
+    //       apiData: result.data
+    //     })
+    //   })
+    // }
+    return (
+      
+      <div className='drink-show'>
+        // <h3>{drinks.drinkName}</h3>
+        // <h3>#{drinks.drink.id}</h3>
+      </div>
+      
+    )
+}
+  // handleSubmit(e) {
+  //   e.preventDefault()
+  //   axios.post('/drink', {
+  //     apiData: this.state.drink
+  //   }).then( (response) => {
+  //     axios.get('/drink').then( (response) => {
+  //       this.setState({
+  //         apiData: response.data
+  //       })
+  //     })
+  //   })
+  // }
 
   // handleFilterClick(filter) {
   //   console.log('Setting filter to:', filter);
@@ -51,12 +65,12 @@ class DrinkList extends React.Component {
 
 
 
-  render() {
-    return (
-        <DrinkList drinks={this.state.drinkName}
-        handleSubmit={this.handleSubmit} />
-    )
-  }
-}
+//   render() {
+//     return (
+//         <DrinkList drinks={this.state.drinkName}
+//         handleSubmit={this.handleSubmit} />
+//     )
+//   }
+// }
 
 export default DrinkList;
