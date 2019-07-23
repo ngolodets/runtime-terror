@@ -95,7 +95,7 @@ router.post('/users/:userid/drinks', (req, res) =>{
 
 //PUT /users/:userid/drinks/:drinkid -- update one drink for one user
 router.put('/users/:userid/drinks/:drinkid', (req, res) => {
-  User.findById(
+  User.findByIdAndUpdate(
     req.params.userid,
     (err, user) => {
       user.drinks.update(
@@ -103,7 +103,7 @@ router.put('/users/:userid/drinks/:drinkid', (req, res) => {
         {
           drinkName: req.body.drinkName,
           ingredients: req.body.ingredients,
-          instructions: req.body.instructins
+          instructions: req.body.instructions
         },
         (err, drink) => {
           if (err) res.json(err)

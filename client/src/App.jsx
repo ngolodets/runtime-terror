@@ -68,7 +68,7 @@ class App extends React.Component {
   // Array Destructuring way to handle this
   handleDetailsClick(drink) {
     console.log('fetching details for:', drink);
-    const url = '/api';
+    const url = '/drink';
     axios.get(url).then(result => {
       this.setState({
         current: result.data
@@ -115,6 +115,9 @@ class App extends React.Component {
             <Favorite />
             <p onClick={this.handleDetailsClick}>click this</p>
           </form>
+          <ul>
+            {this.state.current.map((drink, i) => <li key={i}>{drink}</li>)}
+          </ul>
         </>
       )
     } else {
