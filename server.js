@@ -1,10 +1,11 @@
 require('dotenv').config();
 const express = require('express');
+const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 const expressJWT = require('express-jwt');
 const helmet = require('helmet');
 const RateLimit = require('express-rate-limit');
-const methodOverride = require('method-override');
+//const methodOverride = require('method-override');
 
 const app = express();
 
@@ -43,7 +44,13 @@ app.use('/auth', require('./routes/auth'));
 //will allow to keep routes in the separate file, and this is how to hook them up
 // can use expressJWT({secret: process.env.JWT_SECRET}).unless({method: 'POST'}) to lock every path, except POST
 app.use('/api', expressJWT({secret: process.env.JWT_SECRET}), require('./routes/api'));
+<<<<<<< HEAD
 app.use('/drink', require('./routes/api'));
+=======
+//app.use('/drink', require('./routes/api'));
+
+
+>>>>>>> f19eff8fb07ace37b11ec931343515a906ee0c4a
 
 app.listen(process.env.PORT, () => {
   console.log(` ❄️️  ❄ ...listening on port ${process.env.PORT}... ❄ ❄️ ` )

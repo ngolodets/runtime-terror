@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import './App.css';
-import Drinks from './Drinks'
 
 import Login from './Login';
 import Signup from './Signup';
@@ -93,9 +92,6 @@ class App extends React.Component {
       contents = (
         <>
           <p>Hello, {user.name}!</p>
-          <p onClick={this.logout}>Logout</p> 
-          
-        </>
       )
       
     } else {
