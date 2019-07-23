@@ -1,5 +1,5 @@
 import React from 'react';
-import App from './App';
+// import App from './App';
 import './App.css';
 
 class Favorite extends React.Component {
@@ -10,27 +10,31 @@ class Favorite extends React.Component {
       }
     }
 
-    handleFavorite(e) {
-        e.preventDefault();
-        //! if clicked set to true
-        this.setState({
-            isFav: ''
-        })
+    // handleFavorite(e) {
+    //     e.preventDefault();
+    //     //! if clicked set to true
+    //     this.setState({
+    //         isFav: ''
+    //     })
 
-        let addRemove = ''
-        if (props.isFave) {
-            addRemove = 'remove_from_queue'
-        } else {
-            addRemove = 'add_to_queue'
-        }
+    //     // var addRemove = ''
         
-        render() {
-            return(
-                <div className="favbutton">
+    //     if (this.isFave) {
+    //         addRemove = 'remove_from_queue'
+    //     } else {
+    //         addRemove = 'add_to_queue'
+    //     }
+    // }
+    
+    render() {
+        var addRemove = ''
+        return(
+            <div className="favbutton">
                 <button className={"fav " + addRemove }  onClick={this.handleFavorite}>+</button>
             </div>
         )
     }
 }
+
 
 export default Favorite;

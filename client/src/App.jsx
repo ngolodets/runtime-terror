@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import './App.css';
 
-import DrinkList from './DrinkList'
+// import DrinkList from './DrinkList'
 
 import Login from './Login';
 import Signup from './Signup';
@@ -96,14 +96,8 @@ class App extends React.Component {
           <p>Hello, {user.name}!</p>
           <p onClick={this.logout}>Logout</p>
           <form action="/" method='GET'>
-<<<<<<< HEAD
             <input type="text" name='text' placeholder='Type search request here...'/>
             <input type="submit" value='drinks'/>
-            <Favorite liftToken={this.liftToken} />
-=======
-            <input type="text" name='text' placeholder='Type search request here...' value={this.state.drinkName} />
-            <input type="submit" value='Search'/>
->>>>>>> 452125cf7fba2191825c0f21cd212b61481f9253
           </form>
         </>
       )
