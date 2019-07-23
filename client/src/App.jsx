@@ -95,9 +95,15 @@ class App extends React.Component {
         <>
           <p>Hello, {user.name}!</p>
           <p onClick={this.logout}>Logout</p>
+<<<<<<< HEAD
           <form action="/" method='GET'>
             <input type="text" name='text' placeholder='Type search request here...'/>
             <input type="submit" value='drinks'/>
+=======
+          <form action="/api" method='GET'>
+            <input type="text" name='text' placeholder='Type search request here...'/>
+            <input type="submit" value='Search'/>
+>>>>>>> f19eff8fb07ace37b11ec931343515a906ee0c4a
           </form>
         </>
       )
