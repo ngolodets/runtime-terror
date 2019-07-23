@@ -8,6 +8,7 @@ import './App.css';
 import Login from './Login';
 import Signup from './Signup';
 import Favorite from './Favorite';
+import DrinkList from './DrinkList';
 
 
 class App extends React.Component {
@@ -65,17 +66,20 @@ class App extends React.Component {
   //   })
   // }
 
+
   // Array Destructuring way to handle this
   handleDetailsClick(drink) {
     console.log('fetching details for:', drink);
     const url = '/drink';
     axios.get(url).then(result => {
       this.setState({
-        current: result.data
+        apiData: result.data
       })
       console.log(result)
     })
   }
+
+
 
   liftToken({token, user}) {
     this.setState({
@@ -97,13 +101,22 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    console.log("component did mount")
+
     this.checkForLocalToken()
+
+    const url = '/drink';
+    axios.get(url).then(result => {
+      this.setState({
+        apiData: result.data
+      })
+    })
   }
 
   render() {
     var user = this.state.user
     console.log(user)
-    var contents = ''
+    var contents = '';
     if (user) {
       contents = (
         <>
@@ -114,10 +127,8 @@ class App extends React.Component {
             <input type="submit" value='drinks'/>
             <Favorite />
             <p onClick={this.handleDetailsClick}>click this</p>
+            <DrinkList />
           </form>
-          <ul>
-            {this.state.current.map((drink, i) => <li key={i}>{drink}</li>)}
-          </ul>
         </>
       )
     } else {
