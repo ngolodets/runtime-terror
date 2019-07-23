@@ -1,30 +1,49 @@
 import React from 'react';
-import axios from 'axios';
-import DrinkFaves from './DrinkFaves';
+import Drinks from './Drinks'
 
-
-class DrinkList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      drinks: [],
-      filter: 'all',
-      faves: []
-    }
-  }
-
-  handleSubmit(e) {
-    e.preventDefault()
-    axios.post('/drink', {
-      drinkName: this.state.drink
-    }).then( (response) => {
-      axios.get('/drink').then( (response) => {
-        this.setState({
-          drink: response.data
-        })
-      })
+const DrinkList = props => {
+  let drinks;
+  if ( props.drinks.length ) {
+    drinks = props.drinks.map((drinks, i) => {
+      return <p className='drinkrow' key={i}>{drinks.drinkName}</p>
     })
+  } else {
+    drinks = <p>Drink not created yet</p>
   }
+
+  return (
+    <div className='DrinkList'>
+      <Drinks drink={drinks.drinkName} />
+      {/* <form action={drinks} method="GET">
+        <input type="text" name={props.drinkName} />
+        <input type="submit" value="Add Drink"/>
+      </form> */}
+    </div>
+    
+  );
+}
+
+export default DrinkList;
+
+
+      // filter: 'all',
+      // faves: []
+    //}
+    // this.handleSubmit = this.handleSubmit.bind(this)
+  //}
+
+  // handleSubmit(e) {
+  //   e.preventDefault()
+  //   axios.post('/drink', {
+  //     drinkName: this.state.drinkName
+  //   }).then( (response) => {
+  //     axios.get('/drink').then( (response) => {
+  //       this.setState({
+  //         drinkName: response.data
+  //       })
+  //     })
+  //   })
+  // }
 
   // handleFilterClick(filter) {
   //   console.log('Setting filter to:', filter);
@@ -49,14 +68,15 @@ class DrinkList extends React.Component {
   //   })
   // }
 
+  // componentDidMount() {
+  //   axios.get("/drinks")
+  //   .then(res => {
+  //     this.setState({
+  //       drinks: res.data
+  //     })
+  //   })
+  // }
 
 
-  render() {
-    return (
-        <DrinkList drinks={this.state.drinkName}
-        handleSubmit={this.handleSubmit} />
-    )
-  }
-}
-
-export default DrinkList;
+  //render() {
+  
