@@ -7,25 +7,22 @@ const DrinkList = (props) => {
   let drinks = props.drinks.find((drink) => {
     return drink.id === parseInt(props.match.params.id)
   })
-
-  componentDidMount() {
-    console.log("component did mount")
-
-    this.checkForLocalToken()
-
-    const url = '/drink';
-    axios.get(url).then(result => {
-      this.setState({
-        apiData: result.data
-      })
-    })
-  }
+    
+    // componentDidMount() {
+    //   console.log("component did mount")
+    //   this.checkForLocalToken()
+    //   const url = '/drink';
+    //   axios.get(url).then(result => {
+    //     this.setState({
+    //       apiData: result.data
+    //     })
+    //   })
+    // }
     return (
-
+      
       <div className='drink-show'>
         // <h3>{drinks.drinkName}</h3>
-        // <h3>#{drink.id}</h3>
-        {this.state.apiData && this.state.apiData.map(drink => <li>{drink.drinkName}</li>)}
+        // <h3>#{drinks.drink.id}</h3>
       </div>
       
     )

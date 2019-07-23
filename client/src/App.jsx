@@ -8,7 +8,6 @@ import './App.css';
 import Login from './Login';
 import Signup from './Signup';
 import Favorite from './Favorite';
-import DrinkList from './DrinkList';
 
 
 class App extends React.Component {
@@ -79,8 +78,6 @@ class App extends React.Component {
     })
   }
 
-
-
   liftToken({token, user}) {
     this.setState({
       // can use token: token, OR just
@@ -102,9 +99,7 @@ class App extends React.Component {
 
   componentDidMount() {
     console.log("component did mount")
-
     this.checkForLocalToken()
-
     const url = '/drink';
     axios.get(url).then(result => {
       this.setState({
@@ -125,10 +120,12 @@ class App extends React.Component {
           <form action="/" method='GET'>
             <input type="text" name='text' placeholder='Type search request here...'/>
             <input type="submit" value='drinks'/>
-            <Favorite />
+            {/* <Favorite /> */}
             <p onClick={this.handleDetailsClick}>click this</p>
-            <DrinkList />
           </form>
+          
+
+          {this.state.apiData && this.state.apiData.map(drink => <li>{drink.drinkName}</li>)}
         </>
       )
     } else {
@@ -137,7 +134,7 @@ class App extends React.Component {
             <p>Please signup or login...</p>
             <Login liftToken={this.liftToken} />
             <Signup liftToken={this.liftToken} />
-            <Favorite />
+            {/* <Favorite /> */}
           </>
       );
     }
