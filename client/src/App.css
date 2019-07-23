@@ -28,3 +28,16 @@ body {
     transform: rotate(360deg);
   }
 }
+
+.favbutton {
+  padding: 15px;
+  background-image: radial-gradient(rgba(255,255,255,0.8) 5%, rgba(0,0,0,.3) 80%);
+  border-radius: 100px;
+  border: 1px solid black;
+  
+}
+
+.fav {
+  border-radius: 15px;
+  font: 20px;
+}

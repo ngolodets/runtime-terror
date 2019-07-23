@@ -27,10 +27,10 @@ class Favorite extends React.Component {
     // }
     
     render() {
-        var addRemove = ''
+        // var addRemove = ''
         return(
-            <div className="favbutton">
-                <button className={"fav " + addRemove }  onClick={this.handleFavorite}>+</button>
+            <div className="fav">
+                <button className="favbutton"  onClick={this.handleFavorite}>+</button>
             </div>
         )
     }
