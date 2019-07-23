@@ -3,7 +3,13 @@ import axios from 'axios';
 // import Drinks from 'Drinks';
 import './App.css';
 
-// import DrinkList from './DrinkList'
+// import DrinkShow from './DrinkShow';
+
+// import {
+//   BrowserRouter as Router,
+//   Route,
+//   Link
+// } from 'react-router-dom';
 
 import Login from './Login';
 import Signup from './Signup';
@@ -121,12 +127,12 @@ class App extends React.Component {
             <input type="text" name='text' placeholder='Type search request here...'/>
             <input type="submit" value='drinks'/>
             {/* <Favorite /> */}
-            <p onClick={this.handleDetailsClick}>click this</p>
+            {/* <p onClick={this.handleDetailsClick}>click this</p> */}
           </form>
           
-
-          {this.state.apiData && this.state.apiData.map(drink => <li>{drink.drinkName}</li>)}
+          {this.state.apiData && this.state.apiData.map(drink => <a href="{drink.drinkName}"><img className='drinkImg' src={drink.picture}/>{drink.drinkName}</a>)}
         </>
+
       )
     } else {
       contents = (

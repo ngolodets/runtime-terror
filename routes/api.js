@@ -20,43 +20,6 @@ router.get('/drink/:drinkid', (req, res) => {
   })
 })
 
-// POST /drinks -- create new drink
-// router.post('/drinks', (req, res) => {
-//   let drink = new Drink({ 
-//     drinkName: req.body.drinkName,
-//     ingredients: req.body.ingredients,
-//     instructions: req.body.instructins
-//   });
-//   drink.save((err, drink) => {
-//     res.json(drink)
-//   })
-// })
-
-//PUT /drinks/:id -- update one drink
-// router.put('/drinks/:drinkid', (req, res) => {
-//   Drink.findByIdAndUpdate(
-//     req.params.drinkid, 
-//     { drinkName: req.body.drinkName,
-//       ingredients: req.body.ingredients,
-//       instructions: req.body.instructins
-//     }, 
-//     {new: true}, 
-//     (err, drink) => {
-//       if (err) res.json(err)
-//       res.status(203).json(drink)
-//   }) 
-// })
-
-// DELETE /drinks/:drinkid -- delete a drink
-// router.delete('/drinks/:drinkid', (req, res) => {
-//   Drink.findByIdAndDelete(
-//     req.params.drinkid,
-//     function(err) {
-//       if (err) res.json(err)
-//       res.json({message: "DELETED!"})
-//   })
-// })
-
 //GET /users/:userid/drinks -- get drinks for one user -- WORKS
 router.get('/users/:userid/drinks', (req, res) => {
   User.findById(req.params.userid).populate('drinks').exec((err, user) => {
@@ -129,6 +92,41 @@ router.delete('/users/:userid/drinks/:drinkid', (req, res) => {
   })
 })
 
-
 module.exports = router;
 
+// POST /drinks -- create new drink
+// router.post('/drinks', (req, res) => {
+//   let drink = new Drink({ 
+//     drinkName: req.body.drinkName,
+//     ingredients: req.body.ingredients,
+//     instructions: req.body.instructins
+//   });
+//   drink.save((err, drink) => {
+//     res.json(drink)
+//   })
+// })
+
+//PUT /drinks/:id -- update one drink
+// router.put('/drinks/:drinkid', (req, res) => {
+//   Drink.findByIdAndUpdate(
+//     req.params.drinkid, 
+//     { drinkName: req.body.drinkName,
+//       ingredients: req.body.ingredients,
+//       instructions: req.body.instructins
+//     }, 
+//     {new: true}, 
+//     (err, drink) => {
+//       if (err) res.json(err)
+//       res.status(203).json(drink)
+//   }) 
+// })
+
+// DELETE /drinks/:drinkid -- delete a drink
+// router.delete('/drinks/:drinkid', (req, res) => {
+//   Drink.findByIdAndDelete(
+//     req.params.drinkid,
+//     function(err) {
+//       if (err) res.json(err)
+//       res.json({message: "DELETED!"})
+//   })
+// })
