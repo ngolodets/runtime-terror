@@ -2,32 +2,28 @@ import React from 'react';
 // import App from './App';
 import './App.css';
 
+// var addFavorite;
+
 class Favorite extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        isFav: ''
+        isFav: false
       }
+      this.handleFavorite = this.handleFavorite.bind(this);
     }
 
-    // handleFavorite(e) {
-    //     e.preventDefault();
-    //     //! if clicked set to true
-    //     this.setState({
-    //         isFav: ''
-    //     })
+    handleFavorite(e) {
+        e.preventDefault();
 
-    //     // var addRemove = ''
-        
-    //     if (this.isFave) {
-    //         addRemove = 'remove_from_queue'
-    //     } else {
-    //         addRemove = 'add_to_queue'
-    //     }
-    // }
+        this.setState({
+            isFav: true
+        })
+        console.log('clicked!');
+        console.log(this.state);
+    }
     
     render() {
-        // var addRemove = ''
         return(
             <div className="fav">
                 <button className="favbutton"  onClick={this.handleFavorite}>+</button>

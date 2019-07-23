@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+// import Drinks from 'Drinks';
 import './App.css';
 
 // import DrinkList from './DrinkList'
@@ -21,6 +22,7 @@ class App extends React.Component {
     this.checkForLocalToken = this.checkForLocalToken.bind(this);
     this.liftToken = this.liftToken.bind(this);
     this.logout = this.logout.bind(this);
+    this.handleDetailsClick = this.handleDetailsClick.bind(this)
   }
 
   checkForLocalToken() {
@@ -64,6 +66,17 @@ class App extends React.Component {
   // }
 
   // Array Destructuring way to handle this
+  handleDetailsClick(drink) {
+    console.log('fetching details for:', drink);
+    const url = '/api';
+    axios.get(url).then(result => {
+      this.setState({
+        current: result.data
+      })
+      console.log(result)
+    })
+  }
+
   liftToken({token, user}) {
     this.setState({
       // can use token: token, OR just
@@ -71,6 +84,7 @@ class App extends React.Component {
       user
     })
   }
+
 
   logout() {
     // Remove token from local storage
@@ -99,6 +113,7 @@ class App extends React.Component {
             <input type="text" name='text' placeholder='Type search request here...'/>
             <input type="submit" value='drinks'/>
             <Favorite />
+            <p onClick={this.handleDetailsClick}>click this</p>
           </form>
         </>
       )
@@ -114,7 +129,6 @@ class App extends React.Component {
     }
     return(
       contents
-       
     )
   }
 }
