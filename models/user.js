@@ -19,7 +19,11 @@ const userSchema = new mongoose.Schema({
     required: [true, 'You must enter an email'],
     minLength: [5, 'Email must be between 5 and 99 characters'],
     maxLength: [99, 'Email must be between 5 and 99 characters']
-  }
+  },
+  drinks: [{
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'Drink'
+  }]
 });
 
 userSchema.set('toObject', {

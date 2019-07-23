@@ -1,14 +1,17 @@
 require('dotenv').config();
 const express = require('express');
+const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 const expressJWT = require('express-jwt');
 const helmet = require('helmet');
 const RateLimit = require('express-rate-limit');
+//const methodOverride = require('method-override');
 
 const app = express();
 
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
+app.use(methodOverride('_method'));
 app.use(helmet());
 
 const loginLimiter = new RateLimit({
@@ -24,7 +27,7 @@ const signupLimiter = new RateLimit({
   message: "Maximum accounts created. Please try again later."
 })
 
-mongoose.connect('mongodb://localhost/jwtAuth', {useNewUrlParser: true});
+mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true});
 const db = mongoose.connection;
 db.once('open', () => {
   console.log(`Connected to Mongo on ${db.host}:${db.port}`);
@@ -40,6 +43,9 @@ app.use('/auth', require('./routes/auth'));
 //will allow to keep routes in the separate file, and this is how to hook them up
 // can use expressJWT({secret: process.env.JWT_SECRET}).unless({method: 'POST'}) to lock every path, except POST
 app.use('/api', expressJWT({secret: process.env.JWT_SECRET}), require('./routes/api'));
+//app.use('/drink', require('./routes/api'));
+
+
 
 app.listen(process.env.PORT, () => {
   console.log(` ❄️️  ❄ ...listening on port ${process.env.PORT}... ❄ ❄️ ` )
