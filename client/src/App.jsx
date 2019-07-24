@@ -4,11 +4,11 @@ import axios from 'axios';
 import './App.css';
 // import DrinkShow from './DrinkShow';
 
-// import {
-//   BrowserRouter as Router,
-//   Route,
-//   Link
-// } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom';
 
 import Login from './Login';
 import Signup from './Signup';
@@ -30,6 +30,7 @@ class App extends React.Component {
     this.liftToken = this.liftToken.bind(this);
     this.logout = this.logout.bind(this);
     this.handleDetailsClick = this.handleDetailsClick.bind(this)
+    this.displayAllDrinks = this.displayAllDrinks.bind(this)
   }
 
   checkForLocalToken() {
@@ -64,36 +65,37 @@ class App extends React.Component {
     }
   }
 
-  // Regular way to handle this
-  // liftToken(data) {
-  //   this.setState({
-  //     token: data.token,
-  //     user: data.user
-  //   })
-  // }
-
-  // handleDetailsClick(drink) {
-  //   console.log('fetching details for:', drink);
-  //   const url = '/drink';
-  //   axios.get(url).then(result => {
-  //     this.setState({
-  //       current: result.data
-  //     })
-  //     console.log(result)
-  //   })
-  // }
-
-  // Array Destructuring way to handle this
-  handleDetailsClick(drink) {
-    console.log('fetching details for:', drink);
-    const url = '/api/drinks/:drinkid';
-    axios.get(url).then(result => {
+  handleDetailsClick(drinkId) {
+    console.log('fetching details for:', drinkId);
+    const url = '/api/drinks/' + drinkId;
+    console.log("url is: ",url);
+    let config = {
+      headers: {
+        Authorization: `Bearer ${this.state.token}`
+      }
+    }
+    axios.get(url, config).then(result => {
+      console.log(result)
       this.setState({
         current: result.data
       })
-      console.log(result)
     })
   }
+  // handleClick(e) {
+  //   e.preventDefault()
+    // axios.defaults.headers.common['Authorization'] = `Bearer ${this.state.token}`
+  //   let config = {
+  //     headers: {
+  //       Authorization: `Bearer ${this.state.token}`
+  //     }
+  //   }
+  //   axios.get('/locked/test', config).then( res => {
+  //     console.log("this is the locked response:", res)
+  //     this.setState({
+  //       lockedResult: res.data
+  //     })
+  //   })
+  // }
 
   liftToken({token, user}) {
     this.setState({
@@ -117,20 +119,48 @@ class App extends React.Component {
   //   this.checkForLocalToken()
   // }
   componentDidMount() {
-    console.log("component did mount")
     this.checkForLocalToken()
-    const url = '/drink';
-    axios.get(url).then(result => {
-      this.setState({
-        apiData: result.data
-      })
-    })
+    this.displayAllDrinks()
   }
+
+  displayAllDrinks(e) {
+    //e.preventDefault()
+    setTimeout(() => {
+      let config = {
+        headers: {
+          Authorization: `Bearer ${this.state.token}`
+        }
+      }
+      console.log('config is: ', config)
+      console.log('attempting axios call')
+      axios.get('/api/drinks', config).then( result => {
+        console.log("this is the api response: ", result)
+        this.setState({
+          apiData: result.data
+        })
+        console.log("result is: ", result)
+      })
+    }, 1000)
+  }
+
+  // getData(){
+  //   setTimeout(() => {
+  //     console.log('Our data is fetched');
+  //     this.setState({
+  //       data: 'Hello WallStreet'
+  //     })
+  //   }, 1000)
+  // }
+
+  // componentDidMount(){
+  //   this.getData();
+  // }
 
   render() {
     var user = this.state.user
-    console.log(user)
+    console.log("user is: ",user)
     var contents = '';
+    var current = this.state.current;
     if (user) {
       contents = (
         <>
@@ -142,6 +172,7 @@ class App extends React.Component {
             {/* <Favorite /> */}
             {/* <p onClick={this.handleDetailsClick}>click this</p> */}
           </form>
+<<<<<<< HEAD
             {this.state.apiData && this.state.apiData.map(drink => 
           <div className="drinklist">
             {/* //! will add this line back after fixing things -Miguel */}
@@ -153,9 +184,22 @@ class App extends React.Component {
             </a> 
           </div>
             )}
+=======
+>>>>>>> 1dcd21bf1556192ea8fab93119e8fb19d3be7f80
           <div>
-            {/*<DrinkShow drink={this.state.current} />*/}
+              {<DrinkShow drink={current} />}
           </div>
+          
+              {this.state.apiData && this.state.apiData.map(drink => (
+            <div className="drinklist" onClick={() => this.handleDetailsClick(drink._id)}>
+              <img className='drinkImg' src={drink.picture} style={{display: "block"}} />
+              <br />
+              <p style={{display: "block"}}> 
+                {drink._id}
+              </p> 
+            </div>
+              ))}
+            
         </>
       )
     } else {

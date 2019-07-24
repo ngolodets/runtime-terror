@@ -18,8 +18,8 @@ const drinkSchema = new mongoose.Schema({
     //   measure: String
 
     // }],
-    instructions: String,
-    user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
+    instructions: String//,
+    //user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 }, {
   timestamps: true,
 });
