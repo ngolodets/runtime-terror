@@ -4,11 +4,11 @@ import axios from 'axios';
 import './App.css';
 // import DrinkShow from './DrinkShow';
 
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom';
+// import {
+//   BrowserRouter as Router,
+//   Route,
+//   Link
+// } from 'react-router-dom';
 
 import Login from './Login';
 import Signup from './Signup';
@@ -172,7 +172,6 @@ class App extends React.Component {
             {/* <Favorite /> */}
             {/* <p onClick={this.handleDetailsClick}>click this</p> */}
           </form>
-<<<<<<< HEAD
             {this.state.apiData && this.state.apiData.map(drink => 
           <div className="drinklist">
             {/* //! will add this line back after fixing things -Miguel */}
@@ -184,10 +183,8 @@ class App extends React.Component {
             </a> 
           </div>
             )}
-=======
->>>>>>> 1dcd21bf1556192ea8fab93119e8fb19d3be7f80
           <div>
-              {<DrinkShow drink={current} />}
+              {/* {<DrinkShow drink={current} />} */}
           </div>
           
               {this.state.apiData && this.state.apiData.map(drink => (
