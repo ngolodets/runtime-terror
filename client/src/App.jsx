@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 // import Drinks from 'Drinks';
 import './App.css';
-import DrinkShow from './DrinkShow';
+// import DrinkShow from './DrinkShow';
 
 // import {
 //   BrowserRouter as Router,
@@ -13,6 +13,7 @@ import DrinkShow from './DrinkShow';
 import Login from './Login';
 import Signup from './Signup';
 import Favorite from './Favorite';
+// import Favorite from './Favorite';
 
 
 class App extends React.Component {
@@ -143,7 +144,9 @@ class App extends React.Component {
           </form>
             {this.state.apiData && this.state.apiData.map(drink => 
           <div className="drinklist">
+            {/* //! will add this line back after fixing things -Miguel */}
             <img className='drinkImg' src={drink.picture} style={{display: "block"}} />
+            <Favorite liftToken={this.liftToken} />
             <br />
             <a href="{drink.drinkName}" style={{display: "block"}} onClick={this.handleDetailsClick}> 
               <h4>{drink.drinkName}</h4>
