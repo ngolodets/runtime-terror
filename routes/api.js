@@ -4,7 +4,7 @@ const User = require('../models/user');
 const Drink = require('../models/drink');
 
 // GET /drinks -- display/get all drinks -- WORKS
-router.get('/', (req, res) => {
+router.get('/drinks', (req, res) => {
   Drink.find({}, (err, drinks) => {
     if (err) res.json(err)
     res.json(drinks)
@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
 
 // GET /drinks/:drinkid -- display/get selected drink -- WORKS 
 router.get('/drinks/:drinkid', (req, res) => {
-  Drink.findOne(req.params.id, (err, drink) => {
+  Drink.findById(req.params.drinkid, (err, drink) => {
     if (err) res.json(err)
     res.json(drink)
   })
@@ -58,12 +58,12 @@ router.get('/drinks/:drinkid', (req, res) => {
 // })
 
 //GET /users/:userid/drinks -- get drinks for one user -- WORKS
-router.get('/users/:userid/drinks', (req, res) => {
-  User.findById(req.params.userid).populate('drinks').exec((err, user) => {
-    if (err) res.json(err)
-    res.json(user)
-  }) 
-})
+// router.get('/users/:userid/drinks', (req, res) => {
+//   User.findById(req.params.userid).populate('drinks').exec((err, user) => {
+//     if (err) res.json(err)
+//     res.json(user)
+//   }) 
+// })
 
 //GET /users/:userid/drinks/:drinkid -- WORKS
 router.get('/users/:userid/drinks/:drinkid', (req, res) => {
@@ -106,9 +106,7 @@ router.put('/users/:userid/drinks/:drinkid', (req, res) => {
           instructions: req.body.instructions,
           ingredients: [
             {
-              ingredient: req.body.ingredient
-            },
-            {
+              ingredient: req.body.ingredient,
               measure: req.body.measure
           }
         ],
