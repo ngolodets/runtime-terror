@@ -1,9 +1,19 @@
 import React from 'react';
 import axios from 'axios';
+// import Drinks from 'Drinks';
 import './App.css';
-//import DrinkList from './DrinkList'
+
+// import DrinkShow from './DrinkShow';
+
+// import {
+//   BrowserRouter as Router,
+//   Route,
+//   Link
+// } from 'react-router-dom';
+
 import Login from './Login';
 import Signup from './Signup';
+import Favorite from './Favorite';
 
 
 class App extends React.Component {
@@ -18,6 +28,7 @@ class App extends React.Component {
     this.checkForLocalToken = this.checkForLocalToken.bind(this);
     this.liftToken = this.liftToken.bind(this);
     this.logout = this.logout.bind(this);
+    this.handleDetailsClick = this.handleDetailsClick.bind(this)
   }
 
   checkForLocalToken() {
@@ -72,6 +83,17 @@ class App extends React.Component {
   }
 
   // Array Destructuring way to handle this
+  handleDetailsClick(drink) {
+    console.log('fetching details for:', drink);
+    const url = '/drink';
+    axios.get(url).then(result => {
+      this.setState({
+        apiData: result.data
+      })
+      console.log(result)
+    })
+  }
+
   liftToken({token, user}) {
     this.setState({
       // can use token: token, OR just
@@ -79,6 +101,7 @@ class App extends React.Component {
       user
     })
   }
+
 
   logout() {
     // Remove token from local storage
@@ -107,19 +130,27 @@ class App extends React.Component {
   render() {
     var user = this.state.user
     console.log(user)
-    var contents = ''
+    var contents = '';
     if (user) {
       contents = (
         <>
           <p>Hello, {user.name}!</p>
           <p onClick={this.logout}>Logout</p>
-          <form action="/api" method='GET'>
+          <form action="/" method='GET'>
             <input type="text" name='text' placeholder='Type search request here...'/>
             <input type="submit" value='Search'/>
             {/* <Favorite /> */}
             {/* <p onClick={this.handleDetailsClick}>click this</p> */}
           </form>
-          {this.state.apiData && this.state.apiData.map(drink => <a href="{drink.drinkName}"><img className='drinkImg' src={drink.picture}/>{drink.drinkName}</a>)}
+            {this.state.apiData && this.state.apiData.map(drink => 
+          <div className="drinklist">
+                <img className='drinkImg' src={drink.picture} style={{display: "block"}} />
+                <br />
+                <a href="{drink.drinkName}" style={{display: "block"}}> 
+                  <h4>{drink.drinkName}</h4>
+                </a> 
+          </div>
+            )}
         </>
       )
     } else {
@@ -128,6 +159,7 @@ class App extends React.Component {
             <p>Please signup or login...</p>
             <Login liftToken={this.liftToken} />
             <Signup liftToken={this.liftToken} />
+            {/* <Favorite /> */}
           </>
       );
     }
@@ -136,6 +168,5 @@ class App extends React.Component {
     )
   }
 }
-
 
 export default App;

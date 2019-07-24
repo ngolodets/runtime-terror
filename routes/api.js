@@ -6,7 +6,8 @@ const Drink = require('../models/drink');
 // GET /drinks -- display/get all drinks -- WORKS
 router.get('/', (req, res) => {
   Drink.find({}, (err, drinks) => {
-    err ? console.log(err) : res.json(drinks);
+    if (err) res.json(err)
+    res.json(drinks)
     //res.json({type: 'success', message: "You accessed the protected api routes"})
   })
 })
@@ -102,11 +103,11 @@ router.put('/users/:userid/drinks/:drinkid', (req, res) => {
         req.params.drinkid,
         {
           drinkName: req.body.drinkName,
+          instructions: req.body.instructions,
           ingredients: [
-            ingredients.push(req.body.ingredient),
-            ingredients.push(req.body.measure)
-          ],
-          instructions: req.body.instructions
+            req.body.ingredient,
+            req.body.measure
+          ] 
         },
         (err, drink) => {
           if (err) res.json(err)
