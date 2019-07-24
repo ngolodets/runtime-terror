@@ -79,10 +79,10 @@ router.post('/users/:userid/drinks', (req, res) =>{
     Drink.create({
       drinkName: req.body.drinkName,
       instructions: req.body.instructions,
-      ingredients: [
-        req.body.ingredient,
-        req.body.measure
-      ],
+      ingredients: [{
+        ingredient: req.body.ingredient,
+        measure: req.body.measure
+      }],
       user: req.params.userid
       }, function(err,drink){
           user.drinks.push(drink)
@@ -105,9 +105,13 @@ router.put('/users/:userid/drinks/:drinkid', (req, res) => {
           drinkName: req.body.drinkName,
           instructions: req.body.instructions,
           ingredients: [
-            req.body.ingredient,
-            req.body.measure
-          ] 
+            {
+              ingredient: req.body.ingredient
+            },
+            {
+              measure: req.body.measure
+          }
+        ],
         },
         (err, drink) => {
           if (err) res.json(err)
