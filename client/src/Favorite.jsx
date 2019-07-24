@@ -1,16 +1,16 @@
 import React from 'react';
 // import App from './App';
-import './App.css';
+//import './App.css';
 
 // var addFavorite;
 
 class Favorite extends React.Component {
     constructor(props) {
-      super(props);
-      this.state = {
+        super(props);
+        this.state = {
         isFav: false
-      }
-      this.handleFavorite = this.handleFavorite.bind(this);
+        }
+        this.handleFavorite = this.handleFavorite.bind(this);
     }
 
     handleFavorite(e) {

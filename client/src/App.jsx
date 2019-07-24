@@ -2,8 +2,7 @@ import React from 'react';
 import axios from 'axios';
 // import Drinks from 'Drinks';
 import './App.css';
-
-// import DrinkShow from './DrinkShow';
+import DrinkShow from './DrinkShow';
 
 // import {
 //   BrowserRouter as Router,
@@ -23,7 +22,8 @@ class App extends React.Component {
       token: '',
       user: null,
       errorMessage: '',
-      apiData: null
+      apiData: null,
+      current: []
     }
     this.checkForLocalToken = this.checkForLocalToken.bind(this);
     this.liftToken = this.liftToken.bind(this);
@@ -71,14 +71,24 @@ class App extends React.Component {
   //   })
   // }
 
+  // handleDetailsClick(drink) {
+  //   console.log('fetching details for:', drink);
+  //   const url = '/drink';
+  //   axios.get(url).then(result => {
+  //     this.setState({
+  //       current: result.data
+  //     })
+  //     console.log(result)
+  //   })
+  // }
 
   // Array Destructuring way to handle this
   handleDetailsClick(drink) {
     console.log('fetching details for:', drink);
-    const url = '/drink';
+    const url = '/api/drinks/:drinkid';
     axios.get(url).then(result => {
       this.setState({
-        apiData: result.data
+        current: result.data
       })
       console.log(result)
     })
@@ -92,7 +102,6 @@ class App extends React.Component {
     })
   }
 
-
   logout() {
     // Remove token from local storage
     localStorage.removeItem('mernToken');
@@ -103,6 +112,9 @@ class App extends React.Component {
     })
   }
 
+  // componentDidMount() {
+  //   this.checkForLocalToken()
+  // }
   componentDidMount() {
     console.log("component did mount")
     this.checkForLocalToken()
@@ -125,14 +137,23 @@ class App extends React.Component {
           <p onClick={this.logout}>Logout</p>
           <form action="/" method='GET'>
             <input type="text" name='text' placeholder='Type search request here...'/>
-            <input type="submit" value='drinks'/>
+            <input type="submit" value='Search'/>
             {/* <Favorite /> */}
             {/* <p onClick={this.handleDetailsClick}>click this</p> */}
           </form>
-          
-          {this.state.apiData && this.state.apiData.map(drink => <a href="{drink.drinkName}"><img className='drinkImg' src={drink.picture}/>{drink.drinkName}</a>)}
+            {this.state.apiData && this.state.apiData.map(drink => 
+          <div className="drinklist">
+            <img className='drinkImg' src={drink.picture} style={{display: "block"}} />
+            <br />
+            <a href="{drink.drinkName}" style={{display: "block"}} onClick={this.handleDetailsClick}> 
+              <h4>{drink.drinkName}</h4>
+            </a> 
+          </div>
+            )}
+          <div>
+            {/*<DrinkShow drink={this.state.current} />*/}
+          </div>
         </>
-
       )
     } else {
       contents = (
@@ -149,6 +170,5 @@ class App extends React.Component {
     )
   }
 }
-
 
 export default App;

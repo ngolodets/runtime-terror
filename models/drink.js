@@ -13,6 +13,11 @@ const drinkSchema = new mongoose.Schema({
     picture: String,
     glassType: String,
     ingredients: [ingredientSchema],
+    // ingredients: [{
+    //   ingredient: String,
+    //   measure: String
+
+    // }],
     instructions: String,
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 }, {
