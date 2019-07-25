@@ -76,7 +76,7 @@ router.get('/users/:userid/drinks', (req, res) => {
 //POST /users/:userid/drinks -- create new drink -- WORKS, BUT need to figure out how to post ingredients
 router.post('/drinks', (req, res) =>{
   User.findById(req.user._id, function(err, user) {
-    Drink.create(
+    Drink.findById(
       req.body._id, 
       function(err,drink){
           user.drinks.push(drink)

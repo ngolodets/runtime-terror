@@ -34,7 +34,8 @@ userSchema.set('toObject', {
     let returnJson = {
       _id: ret._id,
       email: ret.email,
-      name: ret.name
+      name: ret.name,
+      drinks: ret.drinks
     }
     return returnJson;
   }
