@@ -23,7 +23,10 @@ const userSchema = new mongoose.Schema({
   drinks: [{
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'Drink'
-  }]
+  }],
+  favorite: {
+    type: Boolean
+  }
 });
 
 userSchema.set('toObject', {

@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('../models/user');
 const Drink = require('../models/drink');
 
-// GET /drinks -- display/get all drinks -- WORKS
+// GET /api/drinks -- display/get all drinks -- WORKS
 router.get('/drinks', (req, res) => {
   Drink.find({}, (err, drinks) => {
     if (err) res.json(err)
@@ -12,7 +12,7 @@ router.get('/drinks', (req, res) => {
   })
 })
 
-// GET /drinks/:drinkid -- display/get selected drink -- WORKS 
+// GET /api/drinks/:drinkid -- display/get selected drink -- WORKS 
 router.get('/drinks/:drinkid', (req, res) => {
   Drink.findById(req.params.drinkid, (err, drink) => {
     if (err) res.json(err)
@@ -57,34 +57,28 @@ router.get('/drinks/:drinkid', (req, res) => {
 //   })
 // })
 
-//GET /users/:userid/drinks -- get drinks for one user -- WORKS
-// router.get('/users/:userid/drinks', (req, res) => {
-//   User.findById(req.params.userid).populate('drinks').exec((err, user) => {
-//     if (err) res.json(err)
-//     res.json(user)
-//   }) 
-// })
-
-//GET /users/:userid/drinks/:drinkid -- WORKS
-router.get('/users/:userid/drinks/:drinkid', (req, res) => {
-  Drink.findById(req.params.drinkid, (err, drink) => {
+// GET /users/:userid/drinks -- get drinks for one user -- WORKS
+router.get('/users/:userid/drinks', (req, res) => {
+  User.findById(req.user._id).populate('drinks').exec((err, user) => {
     if (err) res.json(err)
-    res.json(drink)
-  })
+    res.json(user)
+  }) 
 })
 
+//GET /users/:userid/drinks/:drinkid -- WORKS
+// router.get('/users/:userid/drinks/:drinkid', (req, res) => {
+//   Drink.findById(req.user.drinkid, (err, drink) => {
+//     if (err) res.json(err)
+//     res.json(drink)
+//   })
+// })
+
 //POST /users/:userid/drinks -- create new drink -- WORKS, BUT need to figure out how to post ingredients
-router.post('/users/:userid/drinks', (req, res) =>{
-  User.findById(req.params.userid, function(err, user) {
-    Drink.create({
-      drinkName: req.body.drinkName,
-      instructions: req.body.instructions,
-      ingredients: [{
-        ingredient: req.body.ingredient,
-        measure: req.body.measure
-      }],
-      user: req.params.userid
-      }, function(err,drink){
+router.post('/drinks', (req, res) =>{
+  User.findById(req.user._id, function(err, user) {
+    Drink.create(
+      req.body._id, 
+      function(err,drink){
           user.drinks.push(drink)
           user.save(function(err, user){
             if (err) res.json(err)
@@ -93,6 +87,26 @@ router.post('/users/:userid/drinks', (req, res) =>{
     })
   })
 })
+
+// router.post('/users/:userid/drinks', (req, res) =>{
+//   User.findById(req.params.userid, function(err, user) {
+//     Drink.save({
+//       drinkName: req.body.drinkName,
+//       instructions: req.body.instructions,
+//       ingredients: [{
+//         ingredient: req.body.ingredient,
+//         measure: req.body.measure
+//       }],
+//       user: req.params.userid
+//       }, function(err,drink){
+//           user.drinks.push(drink)
+//           user.save(function(err, user){
+//             if (err) res.json(err)
+//             res.json(user)
+//       })
+//     })
+//   })
+// })
 
 //PUT /users/:userid/drinks/:drinkid -- update one drink for one user -- WORKS
 router.put('/users/:userid/drinks/:drinkid', (req, res) => {

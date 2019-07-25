@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 // import App from './App';
 //import './App.css';
 
@@ -12,11 +13,22 @@ class Favorite extends React.Component {
         }
         this.handleFavorite = this.handleFavorite.bind(this);
     }
-
-    handleFavorite(drink) {
-        drink.preventDefault();
+    
+    handleFavorite(e, drink) {
+        e.preventDefault();
         const newFaves = this.state.isFav.slice()
         const drinkIndex = newFaves.indexOf(drink);
+        const current = this.props.current ? this.props.current: [];
+        let config = {
+            headers: {
+                Authorization: `Bearer ${this.props.token}`
+            }
+        }
+        axios.post('/api/drinks', this.props.current, config)
+            .then( (response) => {
+                console.log(response.data)
+            })
+        
         if (drinkIndex > -1) {
             // we need to deselect this as a fave
             newFaves.splice(drinkIndex, 1)
@@ -24,11 +36,12 @@ class Favorite extends React.Component {
             // We need to add the drink to faves
             newFaves.push(drink)
         }
-        this.setState({
-            isFav: newFaves
-        })
-        console.log(drink)
-        console.log(this.state.isFav)
+        console.log(config)
+    }
+
+    displayFavorite(e) {
+        e.preventDefault()
+        axios.get('/api/drinks', )
     }
     
     render() {
