@@ -1,18 +1,22 @@
 import React from 'react';
 import axios from 'axios';
+import Filter from './Filter';
+import DrinkList from './DrinkList';
 // import Drinks from 'Drinks';
 import './App.css';
 import DrinkShow from './DrinkShow';
 
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom';
+// import {
+//   BrowserRouter as Router,
+//   Route,
+//   Link
+// } from 'react-router-dom';
 
 import Login from './Login';
 import Signup from './Signup';
 import Favorite from './Favorite';
+
+//const newFilterApiData = {};
 
 
 class App extends React.Component {
@@ -23,13 +27,16 @@ class App extends React.Component {
       user: null,
       errorMessage: '',
       apiData: null,
-      current: []
+      current: {},
+      filterValue: '',
+      newFilterApiData: {}
     }
     this.checkForLocalToken = this.checkForLocalToken.bind(this);
     this.liftToken = this.liftToken.bind(this);
     this.logout = this.logout.bind(this);
     this.handleDetailsClick = this.handleDetailsClick.bind(this)
     this.displayAllDrinks = this.displayAllDrinks.bind(this)
+    //this.filterApiData = this.filterApiData.bind(this)
   }
 
   checkForLocalToken() {
@@ -142,6 +149,35 @@ class App extends React.Component {
     }, 1000)
   }
 
+  handleFilterChange(e) {
+    e.preventDefault();
+    let filterValue = e.target.value;
+    filterValue = filterValue.toLowerCase()
+    this.setState({
+      filterValue
+    })
+  }
+
+  getSearchResult(filterBy, objList) {
+    return objList.highlights.filter(function(obj) {
+      return obj.queries.some(function(item) {
+        return item.indexOf(filterBy) >= 0
+      })
+    })
+  }
+
+  // filterApiData (keys, obj) {
+  //   const newFilterApiData = {};
+  //   for (let key in obj) {
+  //     if (keys.includes(key)) {
+  //       newFilterApiData[key] = obj[key];
+  //     }
+  //   }
+  //   //return newFilterApiData;
+  //   this.setState({
+  //     newFilterApiData
+  //   })
+  // }
   // getData(){
   //   setTimeout(() => {
   //     console.log('Our data is fetched');
@@ -160,6 +196,33 @@ class App extends React.Component {
     console.log("user is: ",user)
     var contents = '';
     var current = this.state.current;
+    console.log("this is state", this.state);
+    //const listCopy = Array.from(this.state.apiData);
+    //const filteredList = listCopy.filter(drink => {
+      //return drink.toLowerCase().includes(this.state.filterValue.toLowerCase()) 
+    //})
+
+    // const newFilterApiData = {};
+    // function filterApiData(keys, obj)  {
+    //   for (let key in obj) {
+    //     if (keys.includes(key)) {
+    //       newFilterApiData[key] = obj[key];
+    //     }
+    //   }
+    //     return newFilterApiData;
+    //   // this.setState({
+    //   //   newFilterApiData
+    //   // })
+    // }
+
+    // function getSearchResult(filterBy, objList) {
+    //   return objList.highlights.filter(function(obj) {
+    //     return obj.queries.some(function(item) {
+    //       return item.indexOf(filterBy) >= 0
+    //     })
+    //   })
+    // }
+    
     if (user) {
       contents = (
         <>
@@ -171,20 +234,21 @@ class App extends React.Component {
             {/* <Favorite /> */}
             {/* <p onClick={this.handleDetailsClick}>click this</p> */}
           </form>
+
+          <Filter onChange={this.handleFilterChange} value={this.state.filterValue} />
+          <DrinkList drinks={this.state.newFilterApiData} />
+
           <div>
               {<DrinkShow drink={current} />}
           </div>
           
-              {this.state.apiData && this.state.apiData.map(drink => (
-            <div className="drinklist" onClick={() => this.handleDetailsClick(drink._id)}>
-              <img className='drinkImg' src={drink.picture} style={{display: "block"}} />
-              <br />
-              <p style={{display: "block"}}> 
-                {drink._id}
-              </p> 
-            </div>
-              ))}
-            
+          {this.state.apiData && this.state.apiData.map(drink => (
+          <div className="drinklist" onClick={() => this.handleDetailsClick(drink._id)}>
+            <img className='drinkImg' src={drink.picture} style={{display: "block"}} />
+            <br />
+            <h4 style={{display: "block"}}>{drink.drinkName} </h4> 
+          </div>
+          ))} 
         </>
       )
     } else {

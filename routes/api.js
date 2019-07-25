@@ -12,6 +12,31 @@ router.get('/drinks', (req, res) => {
   })
 })
 
+// GET /drinks/drinkName
+//router.get('/drinks?drinkName=', (req, res) => {
+  // Drink.findOne(req.query.drinkName, (err, drink) => {
+  //   if (err) res.json(err)
+  //   res.json(drink)
+  // })
+//   Drink.find({drinkName: /req.query.drinkName/},
+//     (err, drink) => {
+//       if (err) res.json(err)
+//       res.json(drink)
+//     }
+//   )
+// })
+
+// GET /drinks/ingredients
+// router.get('/drinks?ingredient=', (req, res) => {
+//   Drink.find(
+//     {"ingredients.ingredient": req.body.ingredient},
+//     (err, drink) => {
+//       if (err) res.json(err)
+//       res.json(drink)
+//     }
+//   )
+// })
+
 // GET /drinks/:drinkid -- display/get selected drink -- WORKS 
 router.get('/drinks/:drinkid', (req, res) => {
   Drink.findById(req.params.drinkid, (err, drink) => {
@@ -19,6 +44,16 @@ router.get('/drinks/:drinkid', (req, res) => {
     res.json(drink)
   })
 })
+
+// GET /drinks/drinkName
+// router.get('/drinks/:drinkName', (req, res) => {
+//   Drink.findOne(req.query.drinkName, (err, drink) => {
+//     if (err) res.json(err)
+//     res.json(drinks)
+//   })
+// })
+
+
 
 // POST /drinks -- create new drink
 // router.post('/drinks', (req, res) => {
@@ -66,25 +101,19 @@ router.get('/drinks/:drinkid', (req, res) => {
 // })
 
 //GET /users/:userid/drinks/:drinkid -- WORKS
-router.get('/users/:userid/drinks/:drinkid', (req, res) => {
-  Drink.findById(req.params.drinkid, (err, drink) => {
-    if (err) res.json(err)
-    res.json(drink)
-  })
-})
+// router.get('/users/:userid/drinks/:drinkid', (req, res) => {
+//   Drink.findById(req.params.drinkid, (err, drink) => {
+//     if (err) res.json(err)
+//     res.json(drink)
+//   })
+// })
 
 //POST /users/:userid/drinks -- create new drink -- WORKS, BUT need to figure out how to post ingredients
-router.post('/users/:userid/drinks', (req, res) =>{
+router.post('/drinks', (req, res) =>{
   User.findById(req.params.userid, function(err, user) {
-    Drink.create({
-      drinkName: req.body.drinkName,
-      instructions: req.body.instructions,
-      ingredients: [{
-        ingredient: req.body.ingredient,
-        measure: req.body.measure
-      }],
-      user: req.params.userid
-      }, function(err,drink){
+    Drink.save(
+      req.params._id, 
+      function(err,drink){
           user.drinks.push(drink)
           user.save(function(err, user){
             if (err) res.json(err)
