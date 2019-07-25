@@ -1,4 +1,5 @@
 import React from 'react';
+import Favorite from './Favorite'
 
 const DrinkShow = (props) => {
   const ingredients = props.drink.ingredients ? props.drink.ingredients : [];
@@ -16,6 +17,7 @@ const DrinkShow = (props) => {
       <img src={props.drink.picture} alt="cocktail"/>
       <h3>{props.drink.drinkName} is a {props.drink.category} served in a {props.drink.glassType}</h3>
       <h4>{props.drink.instructions}</h4>
+      <Favorite drink={this.props.drink.drinkName} token={this.props.token}/>
       <p>The list of ingredients:
         {ingredientItems}
       </p>

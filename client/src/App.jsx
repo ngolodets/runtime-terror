@@ -150,7 +150,7 @@ class App extends React.Component {
             <Link to='/'>Back</Link>
             <Route exact path='/' render={ props => <DrinkAll apiData={this.state.apiData} handleDetailsClick={this.handleDetailsClick} {...props} />}/>            
             <Route exact path='/:id' render={ props => <DrinkShow drink={current} {...props} />}/> 
-            <Favorite drink={this.state.current.drinkName} token={this.state.token}/>     
+            <DrinkShow />     
           </div>
         </>
       )
