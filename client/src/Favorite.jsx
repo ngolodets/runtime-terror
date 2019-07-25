@@ -5,7 +5,8 @@ class Favorite extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-        isFav: false
+        isFav: false,
+        favoriteDrinks: null
         }
         this.handleFavorite = this.handleFavorite.bind(this);
     }
@@ -16,7 +17,7 @@ class Favorite extends React.Component {
         const drinkIndex = newFaves.indexOf(drink);
         let config = {
             headers: {
-                Authorization: `Bearer ${this.state.token}`
+                Authorization: `Bearer ${this.props.token}`
             }
         }
         if (drinkIndex > -1) {
@@ -29,7 +30,7 @@ class Favorite extends React.Component {
         this.setState({
             isFav: newFaves
         })
-        axios.post('/api/drinks', this.props.current._id, config)
+        axios.post('/api/drinks', this.props.current, config)
             .then( (response) => {
                 console.log(response)
 
@@ -37,11 +38,39 @@ class Favorite extends React.Component {
         console.log("Drink ",drink)
         console.log("isFave? ",this.state.isFav)
     }
+
+    showFavoriteDrinks() {
+        //e.preventDefault()
+        let config = {
+            headers: {
+                Authorization: `Bearer ${this.state.token}`
+            }
+        }
+        console.log('config is: ', config)
+        console.log('attempting axios call')
+            axios.get('/api/drinks', config).then( result => {
+            console.log("this is the api response: ", result)
+            this.setState({
+                favoriteDrinks: result.data
+            })
+            console.log("result is: ", result.data)
+        })
+    }
     
     render() {
+        const favoriteDrinks = this.state.favoriteDrinks ? this.state.favoriteDrinks : [];
+        const favoriteDrinkItems = favoriteDrinks.map((favoriteDrink, i) => {
+        return(
+            <p key={i}>
+                {favoriteDrink. drinkName}
+                {favoriteDrink._id}
+            </p>
+        )
+    })
         return(
             <div className="fav">
                 <button className="favbutton"  onClick={this.handleFavorite}>+</button>
+                <p>{favoriteDrinkItems}</p>
             </div>
         )
     }
