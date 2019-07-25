@@ -3,7 +3,7 @@ import axios from 'axios';
 // import App from './App';
 //import './App.css';
 
-// var addFavorite;
+// // var addFavorite;
 
 class Favorite extends React.Component {
     constructor(props) {
@@ -46,15 +46,16 @@ class Favorite extends React.Component {
         e.preventDefault()
         axios.get('/api/drinks', )
     }
-    
-    render() {
-        return(
-            <div className="fav">
-                <button className="favbutton"  onClick={this.handleFavorite}>+</button>
-            </div>
-        )
-    }
 }
+    
+//     render() {
+//         return(
+//             <div className="fav">
+//                 <button className="favbutton"  onClick={this.handleFavorite}>+</button>
+//             </div>
+//         )
+//     }
+// }
 
 
-export default Favorite;
+// export default Favorite;
