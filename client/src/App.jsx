@@ -30,7 +30,8 @@ class App extends React.Component {
       apiData: null,
       current: {},
       filterValue: '',
-      newFilterApiData: {}
+      newFilterApiData: {},
+      refreshUser: null
     }
     this.checkForLocalToken = this.checkForLocalToken.bind(this);
     this.liftToken = this.liftToken.bind(this);
@@ -147,12 +148,30 @@ class App extends React.Component {
     // }, 1000)
   }
 
+  showFavoriteDrinks() {
+    //e.preventDefault()
+    let config = {
+        headers: {
+            Authorization: `Bearer ${this.state.token}`
+        }
+    }
+    console.log('config is: ', config)
+    console.log('attempting axios call')
+        axios.get('/api/drinks', config).then( result => {
+        console.log("this is the api response: ", result)
+        this.setState({
+            favoriteDrinks: result.data
+        })
+        console.log("result is: ", result.data)
+    })
+}
+
   render() {
     var user = this.state.user
     console.log("user is: ",user)
     var contents = '';
     var current = this.state.current;
-    console.log("this is state", this.state);
+    // console.log("this is state", this.state);
     //const listCopy = Array.from(this.state.apiData);
     //const filteredList = listCopy.filter(drink => {
       //return drink.toLowerCase().includes(this.state.filterValue.toLowerCase()) 
@@ -191,21 +210,18 @@ class App extends React.Component {
 
           <Filter onChange={this.handleFilterChange} value={this.state.filterValue} />
           <DrinkList drinks={this.state.newFilterApiData} />
-
-          <div>
-            <Route exact path='/' render={ props => <DrinkAll apiData={this.state.apiData} handleDetailsClick={this.handleDetailsClick} {...props} />}/>            
-            <Route exact path='/:id' render={ props => <DrinkShow drink={current} {...props} />}/>            
-          </div>
-              {/* {this.state.apiData && this.state.apiData.map(drink => (
+          <DrinkShow drink={this.state.current} />
+          
+              {this.state.apiData && this.state.apiData.map(drink => (
                 <div className="drinklist" onClick={() => this.handleDetailsClick(drink._id)}>
                   <img className='drinkImg' src={drink.picture} style={{display: "block"}} />
                   <br />
-                  <Favorite  drink={this.state.current.drinkName} token={this.state.token}/>
+                  <Favorite  drink={this.state.current} token={this.state.token} refreshUser={this.state.refreshUser}/>
                   <p style={{display: "block"}}> 
                     {drink.drinkName}
                   </p> 
                 </div>
-              ))} */}
+              ))}
         </>
       )
     } else {
