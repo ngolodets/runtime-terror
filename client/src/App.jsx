@@ -1,8 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-// import Drinks from 'Drinks';
 import './App.css';
 import DrinkShow from './DrinkShow';
+import DrinkAll from './DrinkAll';
 
 import {
   BrowserRouter as Router,
@@ -58,7 +58,7 @@ class App extends React.Component {
               token: res.data.token,
               user: res.data.user,
               errorMessage: ''
-            })
+            }, this.displayAllDrinks)
           }
         })
     }
@@ -114,9 +114,6 @@ class App extends React.Component {
     })
   }
 
-  // componentDidMount() {
-  //   this.checkForLocalToken()
-  // }
   componentDidMount() {
     this.checkForLocalToken()
     this.displayAllDrinks()
@@ -124,7 +121,7 @@ class App extends React.Component {
 
   displayAllDrinks(e) {
     //e.preventDefault()
-    setTimeout(() => {
+    // setTimeout(() => {
       let config = {
         headers: {
           Authorization: `Bearer ${this.state.token}`
@@ -139,21 +136,8 @@ class App extends React.Component {
         })
         console.log("result is: ", result)
       })
-    }, 1000)
+    // }, 1000)
   }
-
-  // getData(){
-  //   setTimeout(() => {
-  //     console.log('Our data is fetched');
-  //     this.setState({
-  //       data: 'Hello WallStreet'
-  //     })
-  //   }, 1000)
-  // }
-
-  // componentDidMount(){
-  //   this.getData();
-  // }
 
   render() {
     var user = this.state.user
@@ -168,23 +152,20 @@ class App extends React.Component {
           <form action="/" method='GET'>
             <input type="text" name='text' placeholder='Type search request here...'/>
             <input type="submit" value='Search'/>
-            {/* <Favorite /> */}
-            {/* <p onClick={this.handleDetailsClick}>click this</p> */}
           </form>
           <div>
-              {<DrinkShow drink={current} />}
+            <Route exact path='/' render={ props => <DrinkAll apiData={this.state.apiData} handleDetailsClick={this.handleDetailsClick} {...props} />}/>            
+            <Route exact path='/:id' render={ props => <DrinkShow drink={current} {...props} />}/>            
           </div>
-          
-              {this.state.apiData && this.state.apiData.map(drink => (
-            <div className="drinklist" onClick={() => this.handleDetailsClick(drink._id)}>
-              <img className='drinkImg' src={drink.picture} style={{display: "block"}} />
-              <br />
-              <p style={{display: "block"}}> 
-                {drink._id}
-              </p> 
-            </div>
-              ))}
-            
+              {/* {this.state.apiData && this.state.apiData.map(drink => (
+                <div className="drinklist" onClick={() => this.handleDetailsClick(drink._id)}>
+                  <img className='drinkImg' src={drink.picture} style={{display: "block"}} />
+                  <br />
+                  <p style={{display: "block"}}> 
+                    {drink.drinkName}
+                  </p> 
+                </div>
+              ))} */}
         </>
       )
     } else {
@@ -193,12 +174,15 @@ class App extends React.Component {
             <p>Please signup or login...</p>
             <Login liftToken={this.liftToken} />
             <Signup liftToken={this.liftToken} />
-            {/* <Favorite /> */}
           </>
       );
     }
-    return(
-      contents
+
+    return (
+      <Router>
+       {contents}
+      </Router>
+      
     )
   }
 }
