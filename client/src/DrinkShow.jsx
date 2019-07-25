@@ -1,5 +1,4 @@
 import React from 'react';
-
 const DrinkShow = (props) => {
   const ingredients = props.drink.ingredients ? props.drink.ingredients : [];
   const ingredientItems = ingredients.map((ingredient, i) => {
@@ -10,7 +9,6 @@ const DrinkShow = (props) => {
     </p>
     )
   })
-
   return (
     <div className='drink-show'>
       <img src={props.drink.picture} alt="cocktail"/>
@@ -22,14 +20,4 @@ const DrinkShow = (props) => {
     </div>
   )
 }
-
 export default DrinkShow;
-
-
-
-
-
-
-
-
-

@@ -23,7 +23,10 @@ const userSchema = new mongoose.Schema({
   drinks: [{
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'Drink'
-  }]
+  }],
+  favorite: {
+    type: Boolean
+  }
 });
 
 userSchema.set('toObject', {
@@ -31,7 +34,8 @@ userSchema.set('toObject', {
     let returnJson = {
       _id: ret._id,
       email: ret.email,
-      name: ret.name
+      name: ret.name,
+      drinks: ret.drinks
     }
     return returnJson;
   }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
+import Favorite from './Favorite';
 
 export class DrinkAll extends Component {
   render() {
@@ -12,7 +13,8 @@ export class DrinkAll extends Component {
                   <br />
                   <p style={{display: "block"}}> 
                     <Link to={`/${drink._id}`}>{drink.drinkName}</Link>
-                  </p> 
+                  </p>
+                  <Favorite  drink={drink} token={this.props.token} refreshUser={this.props.refreshUser} />
                 </div>
               ))}
       </div>
@@ -20,4 +22,4 @@ export class DrinkAll extends Component {
   }
 }
 
-export default DrinkAll
+export default DrinkAll;
