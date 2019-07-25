@@ -18,7 +18,7 @@ class Favorite extends React.Component {
         e.preventDefault();
         const newFaves = this.state.isFav.slice()
         const drinkIndex = newFaves.indexOf(drink);
-        const current = this.props.current ? this.props.current: [];
+        const current = this.props.drink;
 
         const user = this.props.user;
         let config = {
@@ -26,7 +26,7 @@ class Favorite extends React.Component {
                 Authorization: `Bearer ${this.props.token}`
             }
         }
-        axios.post('/api/drinks', this.props.current, config)
+        axios.post('/api/drinks', current, config)
             .then( (response) => {
                 //! we have to fix this line below
                 this.props.refreshUser()
@@ -46,16 +46,15 @@ class Favorite extends React.Component {
         e.preventDefault()
         axios.get('/api/drinks', )
     }
-}
     
-//     render() {
-//         return(
-//             <div className="fav">
-//                 <button className="favbutton"  onClick={this.handleFavorite}>+</button>
-//             </div>
-//         )
-//     }
-// }
+    render() {
+        return(
+            <div className="fav">
+                <button className="favbutton"  onClick={this.handleFavorite}>+</button>
+            </div>
+        )
+    }
+}
 
 
-// export default Favorite;
+export default Favorite;

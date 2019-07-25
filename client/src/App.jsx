@@ -115,7 +115,6 @@ class App extends React.Component {
 
   componentDidMount() {
     this.checkForLocalToken()
-    this.displayAllDrinks()
   }
 
   displayAllDrinks(e) {
@@ -154,7 +153,7 @@ class App extends React.Component {
             <input type="submit" value='Search'/>
           </form>
           <div>
-            <Route exact path='/' render={ props => <DrinkAll apiData={this.state.apiData} handleDetailsClick={this.handleDetailsClick} {...props} />}/>            
+            <Route exact path='/' render={ props => <DrinkAll apiData={this.state.apiData} token={this.state.token} refreshUser={this.checkForLocalToken} handleDetailsClick={this.handleDetailsClick} {...props} />}/>            
             <Route exact path='/:id' render={ props => <DrinkShow drink={current} {...props} />}/>            
           </div>
               {/* {this.state.apiData && this.state.apiData.map(drink => (
