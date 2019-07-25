@@ -120,23 +120,20 @@ class App extends React.Component {
   }
 
   displayAllDrinks(e) {
-    //e.preventDefault()
-    // setTimeout(() => {
-      let config = {
-        headers: {
-          Authorization: `Bearer ${this.state.token}`
-        }
+    let config = {
+      headers: {
+        Authorization: `Bearer ${this.state.token}`
       }
-      console.log('config is: ', config)
-      console.log('attempting axios call')
-      axios.get('/api/drinks', config).then( result => {
-        console.log("this is the api response: ", result)
-        this.setState({
-          apiData: result.data
-        })
-        console.log("result is: ", result)
+    }
+    console.log('config is: ', config)
+    console.log('attempting axios call')
+    axios.get('/api/drinks', config).then( result => {
+      console.log("this is the api response: ", result)
+      this.setState({
+        apiData: result.data
       })
-    // }, 1000)
+      console.log("result is: ", result)
+    })
   }
 
   render() {
@@ -149,40 +146,28 @@ class App extends React.Component {
         <>
           <p>Hello, {user.name}!</p>
           <p onClick={this.logout}>Logout</p>
-          <form action="/" method='GET'>
-            <input type="text" name='text' placeholder='Type search request here...'/>
-            <input type="submit" value='Search'/>
-          </form>
           <div>
+            <Link to='/'>Back</Link>
             <Route exact path='/' render={ props => <DrinkAll apiData={this.state.apiData} handleDetailsClick={this.handleDetailsClick} {...props} />}/>            
-            <Route exact path='/:id' render={ props => <DrinkShow drink={current} {...props} />}/>            
+            <Route exact path='/:id' render={ props => <DrinkShow drink={current} {...props} />}/> 
+            <Favorite drink={this.state.current.drinkName} token={this.state.token}/>     
           </div>
-              {/* {this.state.apiData && this.state.apiData.map(drink => (
-                <div className="drinklist" onClick={() => this.handleDetailsClick(drink._id)}>
-                  <img className='drinkImg' src={drink.picture} style={{display: "block"}} />
-                  <br />
-                  <p style={{display: "block"}}> 
-                    {drink.drinkName}
-                  </p> 
-                </div>
-              ))} */}
         </>
       )
     } else {
       contents = (
-          <>
-            <p>Please signup or login...</p>
-            <Login liftToken={this.liftToken} />
-            <Signup liftToken={this.liftToken} />
-          </>
+        <>
+          <p>Please signup or login...</p>
+          <Login liftToken={this.liftToken} />
+          <Signup liftToken={this.liftToken} />
+        </>
       );
     }
 
     return (
       <Router>
        {contents}
-      </Router>
-      
+      </Router>  
     )
   }
 }
