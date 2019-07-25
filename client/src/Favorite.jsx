@@ -29,13 +29,13 @@ class Favorite extends React.Component {
         this.setState({
             isFav: newFaves
         })
-        axios.post('/api/drinks', req.params._id, config)
+        axios.post('/api/drinks', this.props.current._id, config)
             .then( (response) => {
                 console.log(response)
 
             })
-        console.log(drink)
-        console.log(this.state.isFav)
+        console.log("Drink ",drink)
+        console.log("isFave? ",this.state.isFav)
     }
     
     render() {
