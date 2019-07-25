@@ -19,6 +19,8 @@ class Favorite extends React.Component {
         const newFaves = this.state.isFav.slice()
         const drinkIndex = newFaves.indexOf(drink);
         const current = this.props.current ? this.props.current: [];
+
+        const user = this.props.user;
         let config = {
             headers: {
                 Authorization: `Bearer ${this.props.token}`
@@ -26,17 +28,18 @@ class Favorite extends React.Component {
         }
         axios.post('/api/drinks', this.props.current, config)
             .then( (response) => {
-                console.log(response.data)
+                //! we have to fix this line below
+                this.props.refreshUser()
             })
         
-        if (drinkIndex > -1) {
-            // we need to deselect this as a fave
-            newFaves.splice(drinkIndex, 1)
-        } else {
-            // We need to add the drink to faves
-            newFaves.push(drink)
-        }
-        console.log(config)
+        // if (drinkIndex > -1) {
+        //     // we need to deselect this as a fave
+        //     newFaves.splice(drinkIndex, 1)
+        // } else {
+        //     // We need to add the drink to faves
+        //     newFaves.push(drink)
+        // }
+        console.log(current)
     }
 
     displayFavorite(e) {
