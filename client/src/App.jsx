@@ -17,9 +17,6 @@ import Login from './Login';
 import Signup from './Signup';
 import Favorite from './Favorite';
 
-//const newFilterApiData = {};
-
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -28,10 +25,7 @@ class App extends React.Component {
       user: null,
       errorMessage: '',
       apiData: null,
-      current: {},
-      filterValue: '',
-      newFilterApiData: {},
-      refreshUser: null
+      current: {}
     }
     this.checkForLocalToken = this.checkForLocalToken.bind(this);
     this.liftToken = this.liftToken.bind(this);
@@ -74,16 +68,16 @@ class App extends React.Component {
   }
 
   handleDetailsClick(drinkId) {
-    console.log('fetching details for:', drinkId);
+    // console.log('fetching details for:', drinkId);
     const url = '/api/drinks/' + drinkId;
-    console.log("url is: ",url);
+    // console.log("url is: ",url);
     let config = {
       headers: {
         Authorization: `Bearer ${this.state.token}`
       }
     }
     axios.get(url, config).then(result => {
-      console.log(result)
+      // console.log(result)
       this.setState({
         current: result.data
       })
@@ -130,22 +124,22 @@ class App extends React.Component {
 
   displayAllDrinks(e) {
     //e.preventDefault()
-    // setTimeout(() => {
+    //setTimeout(() => {
       let config = {
         headers: {
           Authorization: `Bearer ${this.state.token}`
         }
       }
-      console.log('config is: ', config)
-      console.log('attempting axios call')
+      // console.log('config is: ', config)
+      // console.log('attempting axios call')
       axios.get('/api/drinks', config).then( result => {
-        console.log("this is the api response: ", result)
+        // console.log("this is the api response: ", result)
         this.setState({
           apiData: result.data
         })
-        console.log("result is: ", result)
+        // console.log("result is: ", result)
       })
-    // }, 1000)
+     //}, 1000)
   }
 
   showFavoriteDrinks() {
@@ -168,7 +162,7 @@ class App extends React.Component {
 
   render() {
     var user = this.state.user
-    console.log("user is: ",user)
+    // console.log("user is: ",user)
     var contents = '';
     var current = this.state.current;
     // console.log("this is state", this.state);
@@ -201,18 +195,35 @@ class App extends React.Component {
     if (user) {
       contents = (
         <>
-          <p>Hello, {user.name}!</p>
-          <p onClick={this.logout}>Logout</p>
-          <form action="/" method='GET'>
-            <input type="text" name='text' placeholder='Type search request here...'/>
-            <input type="submit" value='Search'/>
-          </form>
-
-          <Filter onChange={this.handleFilterChange} value={this.state.filterValue} />
-          <DrinkList drinks={this.state.newFilterApiData} />
-          <DrinkShow drink={this.state.current} />
-          
-              {this.state.apiData && this.state.apiData.map(drink => (
+          <nav>
+            <Link to='/' style={{textDecoration: 'none',
+                          color: 'white',
+                          margin: '5px',
+                          padding: '5px',
+                          float: 'left',}}>HOME{' '} </Link>
+            <p onClick={this.logout} style={{position: "inline-block",
+                                            color: 'white',
+                                            float: "left",
+                                            margin: '5px',
+                                            padding: '5px'}}>LOGOUT
+            </p>
+          </nav>
+          <div className="greetingbox">  
+            <h3 className="greeting">Hello, {user.name}!</h3>
+            {/* <p onClick={this.logout} style={{}}>LOGOUT</p> */}
+            {/* <form action="/" method='GET'>
+              <input type="text" name='text' placeholder='Type search request here...'/>
+              <input type="submit" value='Search'/>
+            </form> */}
+          </div>
+          <div>
+            <Route exact path='/' render={ props => <DrinkAll  apiData={this.state.apiData} 
+                                                              token={this.state.token} 
+                                                              refreshUser={this.checkForLocalToken} 
+                                                              handleDetailsClick={this.handleDetailsClick} {...props} />}/>            
+            <Route exact path='/:id' render={ props => <DrinkShow drink={current} {...props} />}/>            
+          </div>
+              {/* { {this.state.apiData && this.state.apiData.map(drink => (
                 <div className="drinklist" onClick={() => this.handleDetailsClick(drink._id)}>
                   <img className='drinkImg' src={drink.picture} style={{display: "block"}} />
                   <br />
@@ -221,7 +232,7 @@ class App extends React.Component {
                     {drink.drinkName}
                   </p> 
                 </div>
-              ))}
+              ))} */}
         </>
       )
     } else {

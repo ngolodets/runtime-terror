@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('../models/user');
 const Drink = require('../models/drink');
 
-// GET /drinks -- display/get all drinks -- WORKS
+// GET /api/drinks -- display/get all drinks -- WORKS
 router.get('/drinks', (req, res) => {
   Drink.find({}, (err, drinks) => {
     if (err) res.json(err)
@@ -12,32 +12,7 @@ router.get('/drinks', (req, res) => {
   })
 })
 
-// GET /drinks/drinkName
-//router.get('/drinks?drinkName=', (req, res) => {
-  // Drink.findOne(req.query.drinkName, (err, drink) => {
-  //   if (err) res.json(err)
-  //   res.json(drink)
-  // })
-//   Drink.find({drinkName: /req.query.drinkName/},
-//     (err, drink) => {
-//       if (err) res.json(err)
-//       res.json(drink)
-//     }
-//   )
-// })
-
-// GET /drinks/ingredients
-// router.get('/drinks?ingredient=', (req, res) => {
-//   Drink.find(
-//     {"ingredients.ingredient": req.body.ingredient},
-//     (err, drink) => {
-//       if (err) res.json(err)
-//       res.json(drink)
-//     }
-//   )
-// })
-
-// GET /drinks/:drinkid -- display/get selected drink -- WORKS 
+// GET /api/drinks/:drinkid -- display/get selected drink -- WORKS 
 router.get('/drinks/:drinkid', (req, res) => {
   Drink.findById(req.params.drinkid, (err, drink) => {
     if (err) res.json(err)
@@ -126,6 +101,26 @@ router.post('/drinks', (req, res) =>{
     })
   })
 })
+
+// router.post('/users/:userid/drinks', (req, res) =>{
+//   User.findById(req.params.userid, function(err, user) {
+//     Drink.save({
+//       drinkName: req.body.drinkName,
+//       instructions: req.body.instructions,
+//       ingredients: [{
+//         ingredient: req.body.ingredient,
+//         measure: req.body.measure
+//       }],
+//       user: req.params.userid
+//       }, function(err,drink){
+//           user.drinks.push(drink)
+//           user.save(function(err, user){
+//             if (err) res.json(err)
+//             res.json(user)
+//       })
+//     })
+//   })
+// })
 
 //PUT /users/:userid/drinks/:drinkid -- update one drink for one user -- WORKS
 router.put('/users/:userid/drinks/:drinkid', (req, res) => {
