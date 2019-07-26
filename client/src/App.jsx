@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import Filter from './Filter';
-import DrinkList from './DrinkList';
 // import Drinks from 'Drinks';
 import './App.css';
 import DrinkShow from './DrinkShow';
