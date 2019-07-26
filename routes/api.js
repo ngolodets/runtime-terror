@@ -123,44 +123,44 @@ router.post('/drinks', (req, res) =>{
 // })
 
 //PUT /users/:userid/drinks/:drinkid -- update one drink for one user -- WORKS
-router.put('/users/:userid/drinks/:drinkid', (req, res) => {
-  User.findById(
-    req.params.userid,
-    (err, user) => {
-      Drink.findByIdAndUpdate (
-        req.params.drinkid,
-        {
-          drinkName: req.body.drinkName,
-          instructions: req.body.instructions,
-          ingredients: [
-            {
-              ingredient: req.body.ingredient,
-              measure: req.body.measure
-          }
-        ],
-        },
-        (err, drink) => {
-          if (err) res.json(err)
-          res.json(drink)
-        }
-      )
-    }
-  )
-})
+// router.put('/users/:userid/drinks/:drinkid', (req, res) => {
+//   User.findById(
+//     req.params.userid,
+//     (err, user) => {
+//       Drink.findByIdAndUpdate (
+//         req.params.drinkid,
+//         {
+//           drinkName: req.body.drinkName,
+//           instructions: req.body.instructions,
+//           ingredients: [
+//             {
+//               ingredient: req.body.ingredient,
+//               measure: req.body.measure
+//           }
+//         ],
+//         },
+//         (err, drink) => {
+//           if (err) res.json(err)
+//           res.json(drink)
+//         }
+//       )
+//     }
+//   )
+// })
 
 //DELETE /users/:userid/drinks/:drinkid -- detete one drink from one user -- WORKS
-router.delete('/users/:userid/drinks/:drinkid', (req, res) => {
-  User.findById(req.params.userid, (err, user) => {
+router.delete('/drinks/:drinkid', (req, res) => {
+  User.findById(req.user._id, (err, user) => {
     user.drinks.pull(req.params.drinkid)
     user.save(err => {
       if (err) res.json(err)
-      Drink.deleteOne({_id: req.params.drinkid}, err => {
-        if (err) res.json(err)
-        res.json(1)
+      // Drink.deleteOne({_id: req.body.drinkid}, err => {
+      //   if (err) res.json(err)
+        res.json(user)
       })
     })
   })
-})
+// })
 
 module.exports = router;
 

@@ -84,23 +84,103 @@ body {
   text-align: center;
   clear: left;
   background-color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.7px;
 }
 .greeting {
   margin: 0 auto;
+  letter-spacing: 1px;
 }
 .singledrinkpic {
   float: left;
   width: 400px;
   height: 400px;
+  margin: 10px;
+  border: 10px solid rgba(255, 255, 255, 0.4);
 }
 .drink-show {
   clear: left;
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: 'Fjalla One', sans-serif;
+  text-align: left;
+  padding: 10px;
 }
 .drinkinstructions {
   font-family: 'Kaushan Script', cursive;
 }
+.descript {
+  padding: 10px;
+  margin: 10px;
+}
+.indiv-ingred {
+  font-family: 'Fjalla One', sans-serif;
+  font-size: 14px;
+}
+.descriptionbox {
+  /* background: url("https://www.stickpng.com/assets/thumbs/5b06c1a5fad1cae04539afe1.png"); */
+  /* background: url("https://library.kissclipart.com/20180923/sle/kissclipart-blank-sticky-note-clipart-post-it-note-paper-clip-26e12199f832db4c.jpg");
+  background: cover;
+  background-repeat: no-repeat;
+  background-size: 400px 400px;
+  float: right; */
+  float: right;
+  width: 400px;
+  height: 400px;
+  margin: 10px;
+  border: 10px solid rgba(255, 255, 255, 0.4);
+  position: relative;
+  font-size: 13px;
+  
+  /* text-align: center; */
+  /* background-image: url('https://images.unsplash.com/photo-1530034424313-9be028eeae5a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1600&q=80');
+  background-repeat: no-repeat; */
+  /* background-attachment: fixed; */
+  /* background: cover; */
+  /* background-size: 400px 400px;
+  opacity: 0.4;
+  filter: alpha(opacity=50); */
+  /* z-index: 1000; */
+  /* position: absolute; */
+  /* background: rgba(255, 255, 255, 0.5); */
+  
+}
+#drunkperson {
+  height: 400px;
+  width: 400px;
+  opacity: 0.4;
+  filter: alpha(opacity=50);
+}
+.descriptionboxtext {
+  /* opacity: 1;
+  filter: alpha(opacity=100);
+  z-index: 1;
+  position: relative; */
+  position: absolute;
+  top: 8px;
+  left: 16px;
+  /* float: right; */
+}
+.favedescription {
+  width: 80%vw;
+  margin: 10px;
+  padding: 10px;
+}
+.favedescriptionbox {
+  width: 600px;
+  height: 440px;
+  margin: 10px;
+  border: 10px solid rgba(255, 255, 255, 0.4);
+  font-family: 'Fjalla One', sans-serif;
+  text-align: left;
+  padding: 10px;
+  /* float: right; */
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
 
+}
+/* .drink-describe {
+  margin: 10px;
+  border: 10px solid rgba(255, 255, 255, 0.4);
+} */
 
 
 

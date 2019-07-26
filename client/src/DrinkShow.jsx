@@ -17,11 +17,15 @@ const DrinkShow = (props) => {
       </div>
       <div className='drink-show'>
         <img src={props.drink.picture} className="singledrinkpic"/>
-        <h3 className='drinkinstructions'>To make this cocktail:</h3>
-        <h4>{props.drink.instructions}</h4>
-        <p className='drinkinstructions'>INGREDIENTS:
-          {ingredientItems}
-        </p>
+        <div className="descriptionbox">
+          <img src="https://images.unsplash.com/photo-1530034424313-9be028eeae5a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1600&q=80" id="drunkperson"/>
+          <div className="descriptionboxtext">
+            <h3 className='drinkinstructions'>To make this cocktail:</h3>
+            <h4 style={{fontSize: "14px"}}>{props.drink.instructions}</h4>
+            <h3 className='drinkinstructions'>Ingredients:</h3>
+            <h4 class="indiv-ingred">{ingredientItems}</h4> 
+          </div>  
+        </div>
     </div>
     </>
   )

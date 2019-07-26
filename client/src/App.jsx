@@ -6,6 +6,7 @@ import DrinkList from './DrinkList';
 import './App.css';
 import DrinkShow from './DrinkShow';
 import DrinkAll from './DrinkAll';
+import MyDranks from './MyDranks';
 
 import {
   BrowserRouter as Router,
@@ -25,13 +26,15 @@ class App extends React.Component {
       user: null,
       errorMessage: '',
       apiData: null,
-      current: {}
+      current: {},
+      filterValue: 'vodka'
     }
     this.checkForLocalToken = this.checkForLocalToken.bind(this);
     this.liftToken = this.liftToken.bind(this);
     this.logout = this.logout.bind(this);
     this.handleDetailsClick = this.handleDetailsClick.bind(this)
     this.displayAllDrinks = this.displayAllDrinks.bind(this)
+    this.handleFilterChange = this.handleFilterChange.bind(this)
     //this.filterApiData = this.filterApiData.bind(this)
   }
 
@@ -119,7 +122,6 @@ class App extends React.Component {
 
   componentDidMount() {
     this.checkForLocalToken()
-    this.displayAllDrinks()
   }
 
   displayAllDrinks(e) {
@@ -160,11 +162,33 @@ class App extends React.Component {
     })
 }
 
+handleFilterChange(e) {
+  e.preventDefault();
+  const filterValue = e.target.value;
+  this.setState({
+    filterValue // same as filterValue: filterValue
+  })
+}
+
   render() {
     var user = this.state.user
     // console.log("user is: ",user)
     var contents = '';
     var current = this.state.current;
+    const dataCopy = Object.assign({}, this.state.apiData)
+    // var filteredDrinks = this.state.apiData.filter(data => {
+    //   return data.ingredients 
+    // })
+    // .map(ingredient => {
+    //   return data.ingredient
+    // })
+    //   return value.toLowerCase().includes(dataCopy.filterValue.toLowerCase())//ingredient === 'vodka'
+    //   //return fruit.toLowerCase().includes(this.state.filterValue.toLowerCase())
+    // })
+    // const filteredIngredients = filteredDrinks.map((drink, i) => {
+    //   return <p key={i}>{drink.attribute.ingredient}</p>
+    // }
+    //console.log("copied data: ", dataCopy)
     // console.log("this is state", this.state);
     //const listCopy = Array.from(this.state.apiData);
     //const filteredList = listCopy.filter(drink => {
@@ -201,9 +225,14 @@ class App extends React.Component {
                           margin: '5px',
                           padding: '5px',
                           float: 'left',}}>HOME{' '} </Link>
+            <Link to={`/favorites/${user._id}`} style={{textDecoration: 'none',
+                          color: 'white',
+                          margin: '5px',
+                          padding: '5px',
+                          float: 'left',}}>FAVORITES</Link>
             <p onClick={this.logout} style={{position: "inline-block",
                                             color: 'white',
-                                            float: "left",
+                                            float: "right",
                                             margin: '5px',
                                             padding: '5px'}}>LOGOUT
             </p>
@@ -211,7 +240,7 @@ class App extends React.Component {
           <div className="greetingbox">  
             <h3 className="greeting">Hello, {user.name}!</h3>
             {/* <p onClick={this.logout} style={{}}>LOGOUT</p> */}
-            {/* <form action="/" method='GET'>
+            {/* <form>
               <input type="text" name='text' placeholder='Type search request here...'/>
               <input type="submit" value='Search'/>
             </form> */}
@@ -221,7 +250,13 @@ class App extends React.Component {
                                                               token={this.state.token} 
                                                               refreshUser={this.checkForLocalToken} 
                                                               handleDetailsClick={this.handleDetailsClick} {...props} />}/>            
-            <Route exact path='/:id' render={ props => <DrinkShow drink={current} {...props} />}/>            
+            <Route exact path='/:id' render={ props => <DrinkShow drink={current} {...props} />}/>  
+            <Route exact path='/favorites/:id' render={ props => <MyDranks 
+                                              user={user} 
+                                              apiData={this.state.apiData} 
+                                              token={this.state.token} 
+                                              refreshUser={this.checkForLocalToken} 
+                                              handleDetailsClick={this.handleDetailsClick} {...props} />}/>          
           </div>
               {/* { {this.state.apiData && this.state.apiData.map(drink => (
                 <div className="drinklist" onClick={() => this.handleDetailsClick(drink._id)}>
@@ -233,6 +268,7 @@ class App extends React.Component {
                   </p> 
                 </div>
               ))} */}
+
         </>
       )
     } else {
